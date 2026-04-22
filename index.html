@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Media Maratón Carabanchel</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #e8e6e0; padding-bottom: 70px; }
+
+/* ── NAV INFERIOR ─────────────────────────────── */
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #141414; border-top: 0.5px solid #2a2a2a; display: flex; z-index: 100; }
+.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; cursor: pointer; color: #555; border: none; background: none; font-size: 10px; transition: color 0.15s; }
+.nav-btn.active { color: #e8e6e0; }
+.nav-icon { font-size: 20px; line-height: 1; }
+
+/* ── PÁGINAS ──────────────────────────────────── */
+.page { display: none; padding: 1rem; }
+.page.active { display: block; }
+
+/* ── TIPOGRAFÍA BASE ──────────────────────────── */
+h1 { font-size: 19px; font-weight: 600; color: #f0ede6; margin-bottom: 3px; }
+.subtitle { font-size: 12px; color: #555; margin-bottom: 1.25rem; }
+
+/* ── PLAN — RESUMEN ───────────────────────────── */
+.summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 1.25rem; }
+.sc { background: #1a1a1a; border-radius: 10px; padding: 8px 10px; border: 0.5px solid #2a2a2a; }
+.sc-label { font-size: 10px; color: #555; margin-bottom: 2px; }
+.sc-val { font-size: 15px; font-weight: 600; color: #e8e6e0; }
+
+/* ── PLAN — TABS SEMANAS ──────────────────────── */
+.week-tabs { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.wtab { padding: 5px 11px; border-radius: 8px; border: 0.5px solid #2e2e2e; font-size: 12px; cursor: pointer; background: #1a1a1a; color: #888; white-space: nowrap; }
+.wtab.active { background: #e8e6e0; color: #0f0f0f; font-weight: 500; border-color: #e8e6e0; }
+
+/* ── PLAN — SEMANA ────────────────────────────── */
+.week-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+.wm { background: #1a1a1a; border-radius: 8px; padding: 7px 10px; border: 0.5px solid #2a2a2a; }
+.wm-label { font-size: 10px; color: #555; }
+.wm-val { font-size: 13px; font-weight: 600; color: #e8e6e0; }
+.week-note { font-size: 12px; color: #888; background: #1a1a1a; border-radius: 8px; padding: 10px 12px; margin-bottom: 1rem; line-height: 1.6; border-left: 3px solid #1D9E75; }
+.phase-pill { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 99px; margin-bottom: 1rem; }
+.build { background: #0a2e20; color: #5DCAA5; }
+.peak  { background: #2e1f00; color: #EF9F27; }
+.taper { background: #0a1e35; color: #85B7EB; }
+.race  { background: #2e1008; color: #F0997B; }
+
+/* ── PLAN — DÍAS ──────────────────────────────── */
+.days { display: flex; flex-direction: column; gap: 6px; }
+.day { background: #1a1a1a; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 10px 12px; display: flex; gap: 10px; transition: opacity 0.2s; }
+.day.rest { background: #141414; border-color: #1e1e1e; }
+.day.done-hard { opacity: 0.45; }
+.day.today { border-color: #5DCAA5; border-width: 1.5px; }
+.day.checked { background: #0a1f14; border-color: #1D9E75; }
+.dleft { width: 62px; flex-shrink: 0; }
+.dow { font-size: 12px; font-weight: 600; color: #e8e6e0; }
+.ddate { font-size: 10px; color: #555; }
+.dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; }
+.dright { flex: 1; min-width: 0; }
+.dtype { font-size: 13px; font-weight: 600; color: #e8e6e0; margin-bottom: 2px; }
+.dtype.rest-t { color: #444; font-weight: 400; }
+.ddetail { font-size: 11px; color: #777; line-height: 1.5; }
+.dtags { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.dtag { font-size: 10px; padding: 2px 6px; border-radius: 99px; }
+.check-btn { margin-left: auto; flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #333; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.2s; }
+.check-btn.checked { background: #1D9E75; border-color: #1D9E75; }
+.today-badge { font-size: 9px; background: #5DCAA5; color: #041a0e; padding: 1px 6px; border-radius: 99px; font-weight: 600; }
+.week-progress { background: #1a1a1a; border-radius: 10px; padding: 10px 12px; margin-bottom: 1rem; border: 0.5px solid #2a2a2a; }
+.wp-label { font-size: 11px; color: #555; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.wp-bar { background: #111; border-radius: 99px; height: 6px; overflow: hidden; }
+.wp-fill { height: 6px; border-radius: 99px; background: #1D9E75; transition: width 0.4s; }
+.tz2    { background: #0a2e20; color: #5DCAA5; }
+.tz3    { background: #2e1f00; color: #EF9F27; }
+.tz4    { background: #2e0e08; color: #F0997B; }
+.tstr   { background: #1a1535; color: #AFA9EC; }
+.trest  { background: #1e1e1e; color: #555; }
+.trace  { background: #2e1008; color: #F0997B; }
+.thills { background: #2a1800; color: #FAC775; }
+.tseries{ background: #0a1e35; color: #85B7EB; }
+.tdone  { background: #1e1e1e; color: #444; }
+
+/* ── EJERCICIOS — TABS ────────────────────────── */
+.ex-tabs { display: flex; gap: 6px; margin-bottom: 1.25rem; }
+.etab { padding: 6px 14px; border-radius: 8px; border: 0.5px solid #2e2e2e; font-size: 13px; cursor: pointer; background: #1a1a1a; color: #888; }
+.etab.active { background: #e8e6e0; color: #0f0f0f; font-weight: 500; border-color: #e8e6e0; }
+
+/* ── EJERCICIOS — GRID ────────────────────────── */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
+.card { background: #1a1a1a; border: 0.5px solid #2a2a2a; border-radius: 14px; overflow: hidden; }
+.card-header { padding: 12px 14px 8px; }
+.card-name { font-size: 15px; font-weight: 600; color: #f0ede6; margin-bottom: 3px; }
+.card-muscle { font-size: 11px; color: #555; margin-bottom: 7px; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.ctag { font-size: 10px; padding: 2px 7px; border-radius: 99px; }
+.etstr { background: #1a1535; color: #AFA9EC; }
+.etmob { background: #0a2020; color: #5DCAA5; }
+.etprev{ background: #2a1800; color: #FAC775; }
+.etcore{ background: #1e1a10; color: #EF9F27; }
+.etax  { background: #1a1a2e; color: #85B7EB; }
+.series-info { display: flex; gap: 6px; padding: 0 14px 10px; }
+.si { background: #141414; border-radius: 6px; padding: 5px 8px; font-size: 11px; color: #666; flex: 1; text-align: center; }
+.si strong { display: block; font-size: 13px; color: #e8e6e0; font-weight: 600; }
+.video-btn { display: block; position: relative; cursor: pointer; text-decoration: none; margin: 0 14px 12px; border-radius: 10px; overflow: hidden; border: 0.5px solid #2a2a2a; }
+.video-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #141414; }
+.video-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); }
+.play-circle { width: 48px; height: 48px; background: #cc0000; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+.play-tri { width: 0; height: 0; border-top: 9px solid transparent; border-bottom: 9px solid transparent; border-left: 16px solid #fff; margin-left: 3px; }
+.vt-overlay { font-size: 11px; color: #e8e6e0; text-align: center; padding: 0 12px; line-height: 1.4; text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
+.src-badge { position: absolute; top: 8px; right: 8px; font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+.ax-badge  { background: #cc0000; color: #fff; }
+.alt-badge { background: #333; color: #aaa; }
+.steps { padding: 0 14px 10px; border-top: 0.5px solid #222; }
+.steps-title { font-size: 10px; color: #444; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 0 4px; }
+.step { font-size: 12px; color: #888; padding: 5px 0; border-bottom: 0.5px solid #1e1e1e; line-height: 1.5; display: flex; gap: 8px; }
+.step:last-child { border-bottom: none; }
+.snum { color: #444; font-weight: 600; flex-shrink: 0; width: 14px; }
+.key-box { background: #141414; border-radius: 8px; margin: 0 14px 12px; padding: 8px 10px; }
+.key-title { font-size: 10px; color: #444; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+.key-item { font-size: 11px; color: #666; padding: 2px 0; }
+.ok { color: #5DCAA5; margin-right: 4px; }
+.no { color: #F0997B; margin-right: 4px; }
+
+/* ── ZONAS FC ─────────────────────────────────── */
+.zone-card { background: #1a1a1a; border: 0.5px solid #2a2a2a; border-radius: 14px; padding: 14px; margin-bottom: 10px; }
+.zone-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.zone-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.zone-name { font-size: 15px; font-weight: 600; color: #f0ede6; }
+.zone-range { font-size: 12px; color: #555; margin-left: auto; }
+.zone-desc { font-size: 12px; color: #888; line-height: 1.55; margin-bottom: 8px; }
+.zone-use { font-size: 11px; padding: 4px 10px; border-radius: 6px; display: inline-block; }
+.hrv-box { background: #1a1a1a; border: 0.5px solid #2a2a2a; border-radius: 14px; padding: 14px; margin-bottom: 10px; }
+.hrv-title { font-size: 14px; font-weight: 600; color: #f0ede6; margin-bottom: 8px; }
+.hrv-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 0.5px solid #222; font-size: 12px; }
+.hrv-row:last-child { border-bottom: none; }
+.hrv-label { color: #888; }
+.hrv-val { color: #e8e6e0; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<!-- ══ PÁGINA: PLAN ════════════════════════════════ -->
+<div id="page-plan" class="page active">
+  <div style="padding-top:1rem">
+    <h1>Media Maratón Carabanchel</h1>
+    <p class="subtitle">Plan 5 semanas · 21 abr → 24 may 2026 · Salidas a las 6:00</p>
+    <div class="summary">
+      <div class="sc"><div class="sc-label">Carrera</div><div class="sc-val">24 may</div></div>
+      <div class="sc"><div class="sc-label">Semanas</div><div class="sc-val">5</div></div>
+      <div class="sc"><div class="sc-label">Km totales</div><div class="sc-val">~96 km</div></div>
+      <div class="sc"><div class="sc-label">Z2 volumen</div><div class="sc-val">~80%</div></div>
+    </div>
+    <div class="week-tabs">
+      <button class="wtab active" onclick="showWeek(0)">S1 · 20–26 abr</button>
+      <button class="wtab" onclick="showWeek(1)">S2 · 27 abr–3 may</button>
+      <button class="wtab" onclick="showWeek(2)">S3 · 4–10 may</button>
+      <button class="wtab" onclick="showWeek(3)">S4 · 11–17 may</button>
+      <button class="wtab" onclick="showWeek(4)">S5 · 18–24 may</button>
+    </div>
+    <div id="week-content"></div>
+  </div>
+</div>
+
+<!-- ══ PÁGINA: EJERCICIOS ══════════════════════════ -->
+<div id="page-ejercicios" class="page">
+  <div style="padding-top:1rem">
+    <h1>Ejercicios</h1>
+    <p class="subtitle">Toca la miniatura para ver el vídeo en YouTube</p>
+    <div class="ex-tabs">
+      <button class="etab active" onclick="showEx('fuerza',this)">Fuerza</button>
+      <button class="etab" onclick="showEx('bandas',this)">Bandas</button>
+    </div>
+
+    <div id="ex-fuerza">
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Sentadilla búlgara</div>
+          <div class="card-muscle">Cuádriceps · Glúteo mayor · Isquios · Tobillo</div>
+          <div class="card-tags"><span class="ctag etstr">fuerza</span><span class="ctag etprev">prevención</span><span class="ctag etax">ATHLEAN-X</span></div>
+        </div>
+        <div class="series-info">
+          <div class="si"><strong>3</strong>series</div>
+          <div class="si"><strong>12</strong>reps/pierna</div>
+          <div class="si"><strong>60s</strong>descanso</div>
+        </div>
+        <a class="video-btn" href="https://www.youtube.com/watch?v=w4OUtEO27UM" target="_blank">
+          <img class="video-thumb" src="https://img.youtube.com/vi/w4OUtEO27UM/mqdefault.jpg" alt="Búlgara">
+          <div class="video-overlay"><div class="play-circle"><div class="play-tri"></div></div><div class="vt-overlay">Single Greatest Leg Exercise — Jeff Cavaliere · ATHLEAN-X</div></div>
+          <span class="src-badge ax-badge">ATHLEAN-X</span>
+        </a>
+        <div class="steps">
+          <div class="steps-title">Ejecución</div>
+          <div class="step"><span class="snum">1</span>Empeine del pie trasero sobre una silla. Pie delantero un paso largo adelante.</div>
+          <div class="step"><span class="snum">2</span>Torso recto. Baja la rodilla trasera sin tocar el suelo.</div>
+          <div class="step"><span class="snum">3</span>Rodilla delantera alineada sobre el tobillo — no hacia dentro.</div>
+          <div class="step"><span class="snum">4</span>Sube empujando con el talón delantero. Aprieta el glúteo arriba.</div>
+        </div>
+        <div class="key-box">
+          <div class="key-title">Claves</div>
+          <div class="key-item"><span class="ok">✓</span>Rodilla no sobrepasa la punta del pie</div>
+          <div class="key-item"><span class="ok">✓</span>Espalda recta en todo momento</div>
+          <div class="key-item"><span class="no">✗</span>No dejes que la rodilla caiga hacia dentro</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Peso muerto rumano</div>
+          <div class="card-muscle">Isquiotibiales · Glúteo mayor · Erectores · Core</div>
+          <div class="card-tags"><span class="ctag etstr">fuerza</span><span class="ctag etprev">zancada</span></div>
+        </div>
+        <div class="series-info">
+          <div class="si"><strong>3</strong>series</div>
+          <div class="si"><strong>12</strong>reps</div>
+          <div class="si"><strong>60s</strong>descanso</div>
+        </div>
+        <a class="video-btn" href="https://www.youtube.com/watch?v=uhghy9pFIPY" target="_blank">
+          <img class="video-thumb" src="https://img.youtube.com/vi/uhghy9pFIPY/mqdefault.jpg" alt="RDL">
+          <div class="video-overlay"><div class="play-circle"><div class="play-tri"></div></div><div class="vt-overlay">Perfect Romanian Deadlift Form — E3 Rehab</div></div>
+          <span class="src-badge alt-badge">E3 Rehab</span>
+        </a>
+        <div class="steps">
+          <div class="steps-title">Ejecución</div>
+          <div class="step"><span class="snum">1</span>De pie, mancuernas frente a muslos. Pies anchura caderas, rodillas levemente flexionadas.</div>
+          <div class="step"><span class="snum">2</span>Empuja cadera hacia atrás — como si tocaras la pared de detrás con los glúteos.</div>
+          <div class="step"><span class="snum">3</span>Baja mancuernas pegadas a las piernas hasta sentir estiramiento en isquios.</div>
+          <div class="step"><span class="snum">4</span>Vuelve empujando cadera hacia adelante. No hiperextiendas lumbar arriba.</div>
+        </div>
+        <div class="key-box">
+          <div class="key-title">Claves</div>
+          <div class="key-item"><span class="ok">✓</span>Espalda plana — nunca redondees lumbar</div>
+          <div class="key-item"><span class="ok">✓</span>Mancuernas siempre pegadas al cuerpo</div>
+          <div class="key-item"><span class="no">✗</span>No bajes más allá del punto donde se redondea la espalda</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Elevación de talón excéntrica</div>
+          <div class="card-muscle">Gemelos · Sóleo · Tendón de Aquiles</div>
+          <div class="card-tags"><span class="ctag etprev">prevención</span><span class="ctag etstr">tendón</span></div>
+        </div>
+        <div class="series-info">
+          <div class="si"><strong>3</strong>series</div>
+          <div class="si"><strong>15</strong>reps/pierna</div>
+          <div class="si"><strong>60s</strong>descanso</div>
+        </div>
+        <a class="video-btn" href="https://www.youtube.com/watch?v=Shb5bmT-ysc" target="_blank">
+          <img class="video-thumb" src="https://img.youtube.com/vi/Shb5bmT-ysc/mqdefault.jpg" alt="Elevación excéntrica">
+          <div class="video-overlay"><div class="play-circle"><div class="play-tri"></div></div><div class="vt-overlay">Eccentric Calf Raise — Protocolo Alfredson (Aquiles)</div></div>
+          <span class="src-badge alt-badge">Physio</span>
+        </a>
+        <div class="steps">
+          <div class="steps-title">Ejecución</div>
+          <div class="step"><span class="snum">1</span>Punta del pie en el borde de un escalón. Talón colgando fuera.</div>
+          <div class="step"><span class="snum">2</span>Sube con las DOS piernas a puntillas (1 seg rápido).</div>
+          <div class="step"><span class="snum">3</span>Transfiere a UNA pierna. Baja lentamente en 3-4 segundos.</div>
+          <div class="step"><span class="snum">4</span>Talón baja por debajo del escalón. Cambia pierna al terminar la serie.</div>
+        </div>
+        <div class="key-box">
+          <div class="key-title">Claves</div>
+          <div class="key-item"><span class="ok">✓</span>La bajada lenta ES el entrenamiento (protocolo Alfredson)</div>
+          <div class="key-item"><span class="ok">✓</span>Escalón real — no suelo plano</div>
+          <div class="key-item"><span class="no">✗</span>Dolor agudo → para. Molestia leve es normal</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Hip thrust</div>
+          <div class="card-muscle">Glúteo mayor · Glúteo medio · Isquiotibiales · Core</div>
+          <div class="card-tags"><span class="ctag etstr">fuerza</span><span class="ctag etprev">propulsión</span><span class="ctag etax">ATHLEAN-X</span></div>
+        </div>
+        <div class="series-info">
+          <div class="si"><strong>3</strong>series</div>
+          <div class="si"><strong>12</strong>reps</div>
+          <div class="si"><strong>60s</strong>descanso</div>
+        </div>
+        <a class="video-btn" href="https://www.youtube.com/watch?v=f0BJ2iCphow" target="_blank">
+          <img class="video-thumb" src="https://img.youtube.com/vi/f0BJ2iCphow/mqdefault.jpg" alt="Hip thrust">
+          <div class="video-overlay"><div class="play-circle"><div class="play-tri"></div></div><div class="vt-overlay">100% Glute Workout (Most Effective!) — ATHLEAN-X</div></div>
+          <span class="src-badge ax-badge">ATHLEAN-X</span>
+        </a>
+        <div class="steps">
+          <div class="steps-title">Ejecución</div>
+          <div class="step"><span class="snum">1</span>Parte alta de la espalda en banco o sofá. Pies en el suelo, rodillas a 90°.</div>
+          <div class="step"><span class="snum">2</span>Coloca peso (mancuerna o mochila) sobre las caderas.</div>
+          <div class="step"><span class="snum">3</span>Empuja caderas hasta línea recta hombros-caderas-rodillas. Aprieta glúteos.</div>
+          <div class="step"><span class="snum">4</span>Aguanta 1 seg arriba. Baja lentamente sin tocar suelo. Repite.</div>
+        </div>
+        <div class="key-box">
+          <div class="key-title">Claves</div>
+          <div class="key-item"><span class="ok">✓</span>Barbilla al pecho — cuello neutro</div>
+          <div class="key-item"><span class="ok">✓</span>Ajusta pies hasta notar bien el glúteo</div>
+          <div class="key-item"><span class="no">✗</span>No subas más allá de la línea recta</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Dead bug</div>
+          <div class="card-muscle">Core profundo · Transverso · Oblicuos · Lumbar</div>
+          <div class="card-tags"><span class="ctag etcore">core</span><span class="ctag etprev">estabilidad</span></div>
+        </div>
+        <div class="series-info">
+          <div class="si"><strong>3</strong>series</div>
+          <div class="si"><strong>10</strong>reps/lado</div>
+          <div class="si"><strong>45s</strong>descanso</div>
+        </div>
+        <a class="video-btn" href="https://www.youtube.com/watch?v=c5-B-NUJxM8" target="_blank">
+          <img class="video-thumb" src="https://img.youtube.com/vi/c5-B-NUJxM8/mqdefault.jpg" alt="Dead bug">
+          <div class="video-overlay"><div class="play-circle"><div class="play-tri"></div></div><div class="vt-overlay">Dead Bug Core Exercise for Runners</div></div>
+          <span class="src-badge alt-badge">Runners</span>
+        </a>
+        <div class="steps">
+          <div class="steps-title">Ejecución</div>
+          <div class="step"><span class="snum">1</span>Tumbado boca arriba. Brazos al techo. Caderas y rodillas a 90°.</div>
+          <div class="step"><span class="snum">2</span>Aprieta el core. Espalda baja pegada al suelo — siempre.</div>
+          <div class="step"><span class="snum">3</span>Extiende brazo derecho atrás + pierna izquierda adelante a la vez.</div>
+          <div class="step"><span class="snum">4</span>Vuelve lentamente. Alterna. Nunca pierdas contacto lumbar con el suelo.</div>
+        </div>
+        <div class="key-box">
+          <div class="key-title">Claves</div>
+          <div class="key-item"><span class="ok">✓</span>Espalda baja NO se despega del suelo nunca</div>
+          <div class="key-item"><span class="ok">✓</span>Movimiento lento — no por inercia</div>
+          <div class="key-item"><span class="no">✗</span>No contengas la respiración</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Plancha frontal</div>
+          <div class="card-muscle">Core · Transverso · Glúteos · Hombros</div>
+          <div class="card-tags"><span class="ctag etcore">core</span><span class="ctag etstr">estabilidad</span></div>
+        </div>
+        <div class="series-info">
+          <div class="si"><strong>3</strong>series</div>
+          <div class="si"><strong>30-40s</strong>aguante</div>
+          <div class="si"><strong>45s</strong>descanso</div>
+        </div>
+        <a class="video-btn" href="https://www.youtube.com/watch?v=qB7wFQSf_dY" target="_blank">
+          <img class="video-thumb" src="https://img.youtube.com/vi/qB7wFQSf_dY/mqdefault.jpg" alt="Plancha">
+          <div class="video-overlay"><div class="play-circle"><div class="play-tri"></div></div><div class="vt-overlay">Strength Training for Runners: How to Do a Plank</div></div>
+          <span class="src-badge alt-badge">Runners</span>
+        </a>
+        <div class="steps">
+          <div class="steps-title">Ejecución</div>
+          <div class="step"><span class="snum">1</span>Apoya antebrazos y puntas de los pies. Cuerpo en línea recta.</div>
+          <div class="step"><span class="snum">2</span>Aprieta glúteos, core y cuádriceps a la vez.</div>
+          <div class="step"><span class="snum">3</span>Mantén sin dejar caer ni elevar caderas. Respira.</div>
+          <div class="step"><span class="snum">4</span>Cuando se rompe la forma, para. 30 seg bien > 60 seg mal.</div>
+        </div>
+        <div class="key-box">
+          <div class="key-title">Claves</div>
+          <div class="key-item"><span class="ok">✓</span>Empuja el suelo con los antebrazos activamente</div>
+          <div class="key-item"><span class="ok">✓</span>Mirada al suelo — cuello neutro</div>
+          <div class="key-item"><span class="no">✗</span>No hundas la cabeza ni eleves caderas</div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+
+    <div id="ex-bandas" style="display:none">
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Marcha lateral (monster walk)</div>
+          <div class="card-muscle">Glúteo medio · Abductores · Estabilizadores cadera</div>
+          <div class="card-tags"><span class="ctag etmob">movilidad</span><span class="ctag etprev">cadera</span><span class="ctag etax">ATHLEAN-X</span></div>
+        </div>
+        <div class="series-info">
+          <div class="si"><strong>3</strong>series</div>
+          <div class="si"><strong>15</strong>pasos/lado</div>
+          <div class="si"><strong>30s</strong>descanso</div>
+        </div>
+        <a class="video-btn" href="https://www.youtube.com/watch?v=tBSkbfY5pqs" target="_blank">
+          <img class="video-thumb" src="https://img.youtube.com/vi/tBSkbfY5pqs/mqdefault.jpg" alt="Monster walk">
+          <div class="video-overlay"><div class="play-circle"><div class="play-tri"></div></div><div class="vt-overlay">Elastic Legs & Core — Resistance Band Workout · ATHLEAN-X</div></div>
+          <span class="src-badge ax-badge">ATHLEAN-X</span>
+        </a>
+        <div class="steps">
+          <div class="steps-title">Ejecución</div>
+          <div class="step"><span class="snum">1</span>Banda por encima de las rodillas. Pies a anchura de caderas.</div>
+          <div class="step"><span class="snum">2</span>Leve flexión de rodillas — posición mini sentadilla.</div>
+          <div class="step"><span class="snum">3</span>Pasos laterales manteniendo tensión en la banda. No juntes los pies.</div>
+          <div class="step"><span class="snum">4</span>15 pasos a un lado, 15 al otro. Torso recto siempre.</div>
+        </div>
+        <div class="key-box">
+          <div class="key-title">Claves</div>
+          <div class="key-item"><span class="ok">✓</span>Banda siempre tensa — rodillas no se juntan</div>
+          <div class="key-item"><span class="ok">✓</span>Movimiento lento y controlado</div>
+          <div class="key-item"><span class="no">✗</span>No inclines el tronco al dar el paso</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Puente de glúteos con banda</div>
+          <div class="card-muscle">Glúteo mayor · Glúteo medio · Isquiotibiales · Core</div>
+          <div class="card-tags"><span class="ctag etmob">movilidad</span><span class="ctag etprev">activación</span></div>
+        </div>
+        <div class="series-info">
+          <div class="si"><strong>3</strong>series</div>
+          <div class="si"><strong>15</strong>reps</div>
+          <div class="si"><strong>30s</strong>descanso</div>
+        </div>
+        <a class="video-btn" href="https://www.youtube.com/watch?v=1O5pUQsC30Q" target="_blank">
+          <img class="video-thumb" src="https://img.youtube.com/vi/1O5pUQsC30Q/mqdefault.jpg" alt="Puente glúteos">
+          <div class="video-overlay"><div class="play-circle"><div class="play-tri"></div></div><div class="vt-overlay">Glute Bridges + Clamshells Activation Tutorial</div></div>
+          <span class="src-badge alt-badge">Physio</span>
+        </a>
+        <div class="steps">
+          <div class="steps-title">Ejecución</div>
+          <div class="step"><span class="snum">1</span>Tumbado boca arriba. Banda por encima de rodillas. Rodillas a 90°.</div>
+          <div class="step"><span class="snum">2</span>Empuja rodillas ligeramente hacia afuera contra la banda.</div>
+          <div class="step"><span class="snum">3</span>Eleva cadera hasta línea recta. Aprieta glúteos.</div>
+          <div class="step"><span class="snum">4</span>Mantén 2 seg arriba. Baja lentamente. Sin tocar suelo entre reps.</div>
+        </div>
+        <div class="key-box">
+          <div class="key-title">Claves</div>
+          <div class="key-item"><span class="ok">✓</span>Rodillas hacia afuera activa el glúteo medio</div>
+          <div class="key-item"><span class="ok">✓</span>Sin banda también vale como versión inicial</div>
+          <div class="key-item"><span class="no">✗</span>No hiperextiendas la cadera arriba</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Almeja lateral (clamshell)</div>
+          <div class="card-muscle">Glúteo medio · Piriforme · Abductores cadera</div>
+          <div class="card-tags"><span class="ctag etmob">movilidad</span><span class="ctag etprev">cadera</span></div>
+        </div>
+        <div class="series-info">
+          <div class="si"><strong>3</strong>series</div>
+          <div class="si"><strong>15</strong>reps/lado</div>
+          <div class="si"><strong>30s</strong>descanso</div>
+        </div>
+        <a class="video-btn" href="https://www.youtube.com/watch?v=6xDr8LvURMc" target="_blank">
+          <img class="video-thumb" src="https://img.youtube.com/vi/6xDr8LvURMc/mqdefault.jpg" alt="Clamshell">
+          <div class="video-overlay"><div class="play-circle"><div class="play-tri"></div></div><div class="vt-overlay">Clamshell Exercise with Resistance Band</div></div>
+          <span class="src-badge alt-badge">LiveLean</span>
+        </a>
+        <div class="steps">
+          <div class="steps-title">Ejecución</div>
+          <div class="step"><span class="snum">1</span>Tumbado de lado. Banda por encima de rodillas. Caderas y rodillas a 45°.</div>
+          <div class="step"><span class="snum">2</span>Mantén los pies juntos. Abre la rodilla de arriba hacia el techo.</div>
+          <div class="step"><span class="snum">3</span>Sube hasta donde puedas sin que la cadera rote hacia atrás.</div>
+          <div class="step"><span class="snum">4</span>Baja lentamente. Sin rebotes. Cambia de lado al terminar.</div>
+        </div>
+        <div class="key-box">
+          <div class="key-title">Claves</div>
+          <div class="key-item"><span class="ok">✓</span>La cadera no rota — pelvis estable siempre</div>
+          <div class="key-item"><span class="ok">✓</span>Banda de resistencia media</div>
+          <div class="key-item"><span class="no">✗</span>No compenses subiendo la cadera</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Dorsiflexión de tobillo con banda</div>
+          <div class="card-muscle">Tibial anterior · Tobillo · Movilidad articular</div>
+          <div class="card-tags"><span class="ctag etmob">movilidad</span><span class="ctag etprev">tobillo</span></div>
+        </div>
+        <div class="series-info">
+          <div class="si"><strong>3</strong>series</div>
+          <div class="si"><strong>12</strong>reps/pie</div>
+          <div class="si"><strong>30s</strong>descanso</div>
+        </div>
+        <a class="video-btn" href="https://www.youtube.com/watch?v=lUjVK6a4Zmc" target="_blank">
+          <img class="video-thumb" src="https://img.youtube.com/vi/lUjVK6a4Zmc/mqdefault.jpg" alt="Tobillo banda">
+          <div class="video-overlay"><div class="play-circle"><div class="play-tri"></div></div><div class="vt-overlay">Banded Ankle Dorsiflexion — Instantly Improve Mobility</div></div>
+          <span class="src-badge alt-badge">Mobility</span>
+        </a>
+        <div class="steps">
+          <div class="steps-title">Ejecución</div>
+          <div class="step"><span class="snum">1</span>Banda alrededor del tobillo anclada a un punto fijo detrás de ti.</div>
+          <div class="step"><span class="snum">2</span>Pie apoyado ligeramente adelantado. Banda tira del tobillo hacia atrás.</div>
+          <div class="step"><span class="snum">3</span>Lleva la rodilla sobre la punta del pie. Talón siempre en el suelo.</div>
+          <div class="step"><span class="snum">4</span>12 reps lentas. Mantén 2 seg en el punto más profundo.</div>
+        </div>
+        <div class="key-box">
+          <div class="key-title">Claves</div>
+          <div class="key-item"><span class="ok">✓</span>Talón siempre pegado al suelo</div>
+          <div class="key-item"><span class="ok">✓</span>Útil también como calentamiento pre-rodaje</div>
+          <div class="key-item"><span class="no">✗</span>No hagas fuerza con la rodilla — solo mueve el tobillo</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Marcha de cadera con banda</div>
+          <div class="card-muscle">Flexores cadera · Glúteo medio · Core · Equilibrio</div>
+          <div class="card-tags"><span class="ctag etmob">movilidad</span><span class="ctag etprev">running</span><span class="ctag etax">ATHLEAN-X</span></div>
+        </div>
+        <div class="series-info">
+          <div class="si"><strong>3</strong>series</div>
+          <div class="si"><strong>10</strong>pasos/pierna</div>
+          <div class="si"><strong>30s</strong>descanso</div>
+        </div>
+        <a class="video-btn" href="https://www.youtube.com/watch?v=tBSkbfY5pqs" target="_blank">
+          <img class="video-thumb" src="https://img.youtube.com/vi/tBSkbfY5pqs/mqdefault.jpg" alt="Marcha cadera">
+          <div class="video-overlay"><div class="play-circle"><div class="play-tri"></div></div><div class="vt-overlay">Elastic Legs & Core — Resistance Band Workout · ATHLEAN-X</div></div>
+          <span class="src-badge ax-badge">ATHLEAN-X</span>
+        </a>
+        <div class="steps">
+          <div class="steps-title">Ejecución</div>
+          <div class="step"><span class="snum">1</span>De pie. Banda alrededor de los pies o tobillos.</div>
+          <div class="step"><span class="snum">2</span>Levanta una rodilla hasta 90° en equilibrio sobre la otra pierna.</div>
+          <div class="step"><span class="snum">3</span>Mantén 2 seg arriba. Baja lentamente. Alterna piernas.</div>
+          <div class="step"><span class="snum">4</span>Imita el gesto de correr — rodilla sube, cadera estabiliza.</div>
+        </div>
+        <div class="key-box">
+          <div class="key-title">Claves</div>
+          <div class="key-item"><span class="ok">✓</span>Torso recto — no te inclines hacia adelante</div>
+          <div class="key-item"><span class="ok">✓</span>Úsalo también como calentamiento pre-rodaje</div>
+          <div class="key-item"><span class="no">✗</span>No dejes caer la cadera del lado de la pierna en el aire</div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PÁGINA: ZONAS FC ════════════════════════════ -->
+<div id="page-zonas" class="page">
+  <div style="padding-top:1rem">
+    <h1>Zonas de FC</h1>
+    <p class="subtitle">Definidas con prueba de 20' + fórmula Friedman</p>
+
+    <div class="zone-card">
+      <div class="zone-header">
+        <div class="zone-dot" style="background:#9FE1CB"></div>
+        <div class="zone-name">Zona 1 — Recuperación</div>
+        <div class="zone-range">&lt;134 bpm</div>
+      </div>
+      <div class="zone-desc">Esfuerzo muy ligero. Caminar, calentamiento o vuelta a la calma. El cuerpo recupera sin estrés.</div>
+      <span class="zone-use" style="background:#0a2e20;color:#5DCAA5">Descanso activo · vuelta calma</span>
+    </div>
+
+    <div class="zone-card">
+      <div class="zone-header">
+        <div class="zone-dot" style="background:#1D9E75"></div>
+        <div class="zone-name">Zona 2 — Aeróbico base</div>
+        <div class="zone-range">135–145 bpm</div>
+      </div>
+      <div class="zone-desc">El 80% del volumen del plan. Ritmo conversacional — debes poder hablar en frases completas. Es donde se construye la base aeróbica.</div>
+      <div style="font-size:11px;color:#888;margin:6px 0">Tu ritmo actual en Z2: <strong style="color:#5DCAA5">7'00"–7'30"/km</strong></div>
+      <span class="zone-use" style="background:#0a2e20;color:#5DCAA5">Rodajes suaves · tiradas largas</span>
+    </div>
+
+    <div class="zone-card">
+      <div class="zone-header">
+        <div class="zone-dot" style="background:#EF9F27"></div>
+        <div class="zone-name">Zona 3 — Tempo</div>
+        <div class="zone-range">146–156 bpm</div>
+      </div>
+      <div class="zone-desc">Esfuerzo moderado-alto. Puedes hablar pero en frases cortas. Es el ritmo objetivo de carrera el día de Carabanchel.</div>
+      <div style="font-size:11px;color:#888;margin:6px 0">Ritmo objetivo carrera: <strong style="color:#EF9F27">6'30"–6'45"/km</strong></div>
+      <span class="zone-use" style="background:#2e1f00;color:#EF9F27">Tempo · ritmo carrera · cuestas</span>
+    </div>
+
+    <div class="zone-card">
+      <div class="zone-header">
+        <div class="zone-dot" style="background:#E24B4A"></div>
+        <div class="zone-name">Zona 4 — Umbral</div>
+        <div class="zone-range">157–166 bpm</div>
+      </div>
+      <div class="zone-desc">Esfuerzo alto. Difícil hablar. Se usa en series e intervals — el 20% de calidad del plan.</div>
+      <span class="zone-use" style="background:#2e0e08;color:#F0997B">Series · cuestas cortas · intervals</span>
+    </div>
+
+    <div class="zone-card">
+      <div class="zone-header">
+        <div class="zone-dot" style="background:#A32D2D"></div>
+        <div class="zone-name">Zona 5 — Máximo</div>
+        <div class="zone-range">167+ bpm</div>
+      </div>
+      <div class="zone-desc">Esfuerzo máximo. No sostenible más de segundos. No está en el plan salvo picos puntuales en series o cuestas.</div>
+      <span class="zone-use" style="background:#2e0808;color:#F0997B">Picos puntuales en series</span>
+    </div>
+
+    <div class="hrv-box">
+      <div class="hrv-title">Referencia de tus últimas sesiones</div>
+      <div class="hrv-row"><span class="hrv-label">Tirada larga 19 abr (10 km)</span><span class="hrv-val" style="color:#F0997B">157 bpm · Z3/Z4</span></div>
+      <div class="hrv-row"><span class="hrv-label">Series cinta</span><span class="hrv-val" style="color:#EF9F27">141 bpm · Z2/Z3</span></div>
+      <div class="hrv-row"><span class="hrv-label">Rodaje suave Retiro (7 km)</span><span class="hrv-val" style="color:#5DCAA5">144 bpm · Z2 ✓</span></div>
+      <div class="hrv-row"><span class="hrv-label">Rodaje Z2 hoy (7,84 km)</span><span class="hrv-val" style="color:#5DCAA5">142 bpm · Z2 ✓</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NAV INFERIOR ════════════════════════════════ -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="navTo('plan',this)">
+    <span class="nav-icon">📅</span>Plan
+  </button>
+  <button class="nav-btn" onclick="navTo('ejercicios',this)">
+    <span class="nav-icon">💪</span>Ejercicios
+  </button>
+  <button class="nav-btn" onclick="navTo('zonas',this)">
+    <span class="nav-icon">❤️</span>Zonas FC
+  </button>
+</nav>
+
+<script>
+/* ── NAVEGACIÓN PÁGINAS ── */
+function navTo(page, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ── TABS EJERCICIOS ── */
+function showEx(block, el) {
+  document.querySelectorAll('.etab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ex-fuerza').style.display = block === 'fuerza' ? 'block' : 'none';
+  document.getElementById('ex-bandas').style.display = block === 'bandas' ? 'block' : 'none';
+}
+
+/* ── PLAN — DATOS SEMANAS ── */
+const W = [
+  {
+    phase:"build", phaseText:"Construcción base",
+    meta:[{l:"Volumen",v:"~24 km"},{l:"Martes",v:"55 min Z2"},{l:"Calidad",v:"Series vie"},{l:"Tirada",v:"12 km"}],
+    note:"Lunes y martes ya completados. Fuerza el miércoles, descanso el jueves post-vacuna, series el viernes. Sábado descanso completo antes de los 12 km.",
+    days:[
+      {dow:"Lun",date:"20 abr",type:"Descanso ✓",detail:"Recuperación post tirada larga del 19 abr.",dot:"#B4B2A9",tags:[{c:"tdone",t:"✓"}],rest:true,done:true},
+      {dow:"Mar",date:"21 abr",type:"Rodaje Z2 ✓",detail:"55 min · 7,84 km · 7'02\"/km · 142 bpm",dot:"#1D9E75",tags:[{c:"tdone",t:"✓"}],done:true},
+      {dow:"Mié",date:"22 abr",type:"Fuerza — cuerpo inferior",detail:"35 min · Búlgara · RDL · talón excéntrico · plancha · dead bug · 3×12",dot:"#7F77DD",tags:[{c:"tstr",t:"fuerza"}]},
+      {dow:"Jue",date:"23 abr",type:"Descanso — vacuna alergia",detail:"Descanso completo. Última dosis de la vacuna.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Vie",date:"24 abr",type:"Series",detail:"~50 min · 2 km Z2 + 5×3 min Z4 (157–165 bpm) 90 seg rec + 2 km vuelta calma",dot:"#185FA5",tags:[{c:"tseries",t:"series"},{c:"tz4",t:"Z4"}]},
+      {dow:"Sáb",date:"25 abr",type:"Descanso",detail:"Descanso completo. Come bien. Mañana 12 km.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Dom",date:"26 abr",type:"Tirada larga — 12 km",detail:"12 km · 7'10\"–7'30\"/km · Z2 estricto · Run-walk 9/1 si FC >145 · Salida 6:00",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+    ]
+  },
+  {
+    phase:"build", phaseText:"Construcción base",
+    meta:[{l:"Volumen",v:"~28 km"},{l:"Martes",v:"60 min Z2"},{l:"Calidad",v:"Cuestas vie"},{l:"Tirada",v:"14 km"}],
+    note:"Primera semana de cuestas. El martes sube a 60 min. El 1 de mayo es festivo — aprovéchalo para las cuestas.",
+    days:[
+      {dow:"Lun",date:"27 abr",type:"Descanso",detail:"Recuperación de los 12 km del domingo.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Mar",date:"28 abr",type:"Rodaje Z2",detail:"60 min · 7'00\"–7'15\"/km · FC 135–145 bpm",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+      {dow:"Mié",date:"29 abr",type:"Descanso",detail:"Recuperación activa.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Jue",date:"30 abr",type:"Fuerza — carga progresiva",detail:"35 min · Búlgara con carga · RDL · talón excéntrico · plancha · superman · 3×10",dot:"#7F77DD",tags:[{c:"tstr",t:"fuerza"}]},
+      {dow:"Vie",date:"1 may",type:"Cuestas cortas 🎉 Festivo",detail:"~55 min · 2 km Z2 + 6×45 seg subida Z3–Z4 + bajada trotando · FC subida: 146–160 bpm",dot:"#BA7517",tags:[{c:"thills",t:"cuestas"},{c:"tz4",t:"Z4"}]},
+      {dow:"Sáb",date:"2 may",type:"Movilidad con bandas",detail:"25 min · Monster walk · almeja · puente glúteos · tobillo · ligero pre-tirada",dot:"#5DCAA5",tags:[{c:"tstr",t:"bandas"}]},
+      {dow:"Dom",date:"3 may",type:"Tirada larga — 14 km",detail:"14 km · 7'10\"–7'30\"/km · Z2 estricto · Lleva agua o isotónico · Salida 6:00",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+    ]
+  },
+  {
+    phase:"peak", phaseText:"Semana pico",
+    meta:[{l:"Volumen",v:"~33 km"},{l:"Martes",v:"65 min Z2"},{l:"Calidad",v:"Cuestas vie"},{l:"Tirada",v:"16 km"}],
+    note:"La semana más importante del plan. Sábado descanso completo antes de los 16 km. Si terminas el domingo, la carrera está hecha.",
+    days:[
+      {dow:"Lun",date:"4 may",type:"Descanso",detail:"Recuperación de los 14 km.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Mar",date:"5 may",type:"Rodaje Z2",detail:"65 min · 7'00\"–7'15\"/km · FC 135–145 bpm",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+      {dow:"Mié",date:"6 may",type:"Descanso",detail:"Foam roller si hay tensión en cuádriceps o isquios.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Jue",date:"7 may",type:"Fuerza — calidad",detail:"35 min · Búlgara con carga · RDL · talón excéntrico · rotaciones tronco · plancha · 3×10",dot:"#7F77DD",tags:[{c:"tstr",t:"fuerza"}]},
+      {dow:"Vie",date:"8 may",type:"Cuestas largas",detail:"~60 min · 2 km Z2 + 5×90 seg subida Z4 + bajada trotando · FC subida: 157–165 bpm",dot:"#BA7517",tags:[{c:"thills",t:"cuestas"},{c:"tz4",t:"Z4"}]},
+      {dow:"Sáb",date:"9 may",type:"Descanso",detail:"Descanso completo. Come bien. Duerme 8h. Mañana 16 km.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Dom",date:"10 may",type:"TIRADA LARGA — 16 km",detail:"16 km · 7'10\"–7'30\"/km · Z2 estricto · Gel km 10 · Run-walk si necesitas · Salida 6:00",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+    ]
+  },
+  {
+    phase:"taper", phaseText:"Tapering",
+    meta:[{l:"Volumen",v:"~18 km"},{l:"Martes",v:"45 min Z2"},{l:"Calidad",v:"Tempo vie"},{l:"Tirada",v:"7 km"}],
+    note:"Baja el volumen, mantén algo de intensidad. Sentirte pesado o lento es normal — es buena señal. No añadas sesiones extra.",
+    days:[
+      {dow:"Lun",date:"11 may",type:"Descanso",detail:"Recuperación de los 16 km.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Mar",date:"12 may",type:"Rodaje Z2",detail:"45 min · 7'20\"–7'40\"/km · FC <143 bpm · muy cómodo",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+      {dow:"Mié",date:"13 may",type:"Descanso",detail:"Caminar 20 min. Estiramientos suaves.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Jue",date:"14 may",type:"Última sesión fuerza",detail:"25 min · Sentadillas · zancadas · puente glúteos · plancha · ligera, sin agujetas",dot:"#7F77DD",tags:[{c:"tstr",t:"fuerza"}]},
+      {dow:"Vie",date:"15 may",type:"Tempo suave",detail:"55 min · 3 km Z2 + 3 km a 6'30\"–6'45\"/km + 2 km vuelta calma",dot:"#185FA5",tags:[{c:"tseries",t:"tempo"},{c:"tz3",t:"Z3"}]},
+      {dow:"Sáb",date:"16 may",type:"Descanso",detail:"Movilidad suave 20 min. Prepara el kit.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Dom",date:"17 may",type:"Tirada corta — 7 km",detail:"7 km · 7'30\"/km · Z2 suave · último esfuerzo largo · Salida 6:00",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+    ]
+  },
+  {
+    phase:"race", phaseText:"Semana de carrera",
+    meta:[{l:"Carrera",v:"Dom 24 may"},{l:"Activaciones",v:"2"},{l:"Descansos",v:"4"},{l:"Salida",v:"6:00"}],
+    note:"Carga mínima. Llegar fresco es el único objetivo. Nada nuevo el día de carrera: ni ropa, ni zapatillas, ni comida.",
+    days:[
+      {dow:"Lun",date:"18 may",type:"Descanso",detail:"Recuperación de la tirada del domingo.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Mar",date:"19 may",type:"Activación suave",detail:"25 min · 7'30\"–8'00\"/km · FC Z1–Z2 · solo despertar las piernas",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+      {dow:"Mié",date:"20 may",type:"Descanso",detail:"Sin impacto. Estiramientos suaves.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Jue",date:"21 may",type:"Strides",detail:"15 min trote + 4×20 seg aceleración suave + 40 seg rec + 5 min vuelta calma",dot:"#185FA5",tags:[{c:"tseries",t:"strides"}]},
+      {dow:"Vie",date:"22 may",type:"Descanso total",detail:"Come bien (pasta, arroz). Duerme pronto. Prepara el kit.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Sáb",date:"23 may",type:"Descanso total",detail:"Caminata 20 min. Hidratación máxima. Visualiza la carrera.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
+      {dow:"Dom",date:"24 may",type:"MEDIA MARATÓN — 21,1 km",detail:"Puente de Toledo · Salida 6:00\nKm 1–5: 7'00\"–7'10\"/km conservador\nKm 5–12: gestiona la subida · Z3\nKm 15–21: desnivel favorable · a tope\nGel: km 7 y km 14",dot:"#D85A30",tags:[{c:"trace",t:"carrera"}]},
+    ]
+  }
+];
+
+/* ── FECHAS DEL PLAN ── */
+// Cada día del plan tiene una fecha real (año 2026)
+const PLAN_DATES = [
+  // S1: 20–26 abr
+  '2026-04-20','2026-04-21','2026-04-22','2026-04-23','2026-04-24','2026-04-25','2026-04-26',
+  // S2: 27 abr–3 may
+  '2026-04-27','2026-04-28','2026-04-29','2026-04-30','2026-05-01','2026-05-02','2026-05-03',
+  // S3: 4–10 may
+  '2026-05-04','2026-05-05','2026-05-06','2026-05-07','2026-05-08','2026-05-09','2026-05-10',
+  // S4: 11–17 may
+  '2026-05-11','2026-05-12','2026-05-13','2026-05-14','2026-05-15','2026-05-16','2026-05-17',
+  // S5: 18–24 may
+  '2026-05-18','2026-05-19','2026-05-20','2026-05-21','2026-05-22','2026-05-23','2026-05-24',
+];
+
+function todayStr() {
+  const d = new Date();
+  return d.toISOString().slice(0,10);
+}
+
+function getActiveWeek() {
+  const today = todayStr();
+  for (let w = 0; w < 5; w++) {
+    const start = PLAN_DATES[w * 7];
+    const end   = PLAN_DATES[w * 7 + 6];
+    if (today >= start && today <= end) return w;
+  }
+  if (today < PLAN_DATES[0]) return 0;
+  return 4;
+}
+
+/* ── CHECKS — localStorage ── */
+function checkKey(weekIdx, dayIdx) {
+  return `carabanchel_w${weekIdx}_d${dayIdx}`;
+}
+function isChecked(w, d) {
+  return localStorage.getItem(checkKey(w, d)) === '1';
+}
+function toggleCheck(w, d) {
+  const key = checkKey(w, d);
+  if (localStorage.getItem(key) === '1') {
+    localStorage.removeItem(key);
+  } else {
+    localStorage.setItem(key, '1');
+  }
+  showWeek(w);
+}
+
+/* ── RENDERIZADO SEMANA ── */
+function showWeek(i) {
+  document.querySelectorAll('.wtab').forEach((t,j) => t.classList.toggle('active', j===i));
+  const w = W[i];
+  const today = todayStr();
+
+  // Sesiones activas (no descanso, no ya completadas por defecto)
+  const activeDays = w.days.filter(d => !d.rest).length;
+  const checkedCount = w.days.filter((d, di) => isChecked(i, di)).length;
+  const pct = activeDays > 0 ? Math.round((checkedCount / activeDays) * 100) : 0;
+
+  let html = `<span class="phase-pill ${w.phase}">${w.phaseText}</span>`;
+  html += `<div class="week-meta">${w.meta.map(m=>`<div class="wm"><div class="wm-label">${m.l}</div><div class="wm-val">${m.v}</div></div>`).join('')}</div>`;
+
+  // Barra de progreso
+  html += `<div class="week-progress">
+    <div class="wp-label"><span>Progreso semanal</span><span style="color:#e8e6e0;font-weight:500">${checkedCount}/${activeDays} sesiones</span></div>
+    <div class="wp-bar"><div class="wp-fill" style="width:${pct}%"></div></div>
+  </div>`;
+
+  html += `<div class="week-note">${w.note}</div>`;
+  html += `<div class="days">`;
+
+  w.days.forEach((d, di) => {
+    const dateStr = PLAN_DATES[i * 7 + di];
+    const isToday = dateStr === today;
+    const isPast  = dateStr < today;
+    const checked = isChecked(i, di) || d.done;
+    const hardDone = d.done; // completados pre-fijados (lun/mar sem1)
+
+    let cls = 'day';
+    if (d.rest && !isToday) cls += ' rest';
+    if (isToday) cls += ' today';
+    if (checked && !hardDone) cls += ' checked';
+    if (hardDone) cls += ' done-hard';
+
+    // Botón check: no en descansos ni en sesiones pre-fijadas
+    const showBtn = !d.rest && !hardDone;
+    const btnCls  = checked ? 'check-btn checked' : 'check-btn';
+
+    html += `<div class="${cls}">
+      <div class="dleft">
+        <div class="dow">${d.dow}</div>
+        <div class="ddate">${d.date}</div>
+        <div class="dot" style="background:${d.dot}"></div>
+      </div>
+      <div class="dright">
+        <div class="dtype ${d.rest&&!d.done?'rest-t':''}">${d.type}${isToday?' <span class="today-badge">HOY</span>':''}</div>
+        <div class="ddetail">${d.detail.replace(/\n/g,'<br>')}</div>
+        <div class="dtags">
+          ${d.tags.map(t=>`<span class="dtag ${t.c}">${t.t}</span>`).join('')}
+          ${showBtn ? `<button class="${btnCls}" onclick="toggleCheck(${i},${di})" style="margin-left:auto">${checked?'✓':''}</button>` : ''}
+        </div>
+      </div>
+    </div>`;
+  });
+
+  html += `</div>`;
+  document.getElementById('week-content').innerHTML = html;
+}
+
+/* ── INIT: abre la semana activa automáticamente ── */
+const activeWeek = getActiveWeek();
+showWeek(activeWeek);
+</script>
+</body>
+</html>
