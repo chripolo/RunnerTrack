@@ -756,34 +756,82 @@ function getActiveWeek() {
   return today < PLAN_DATES[0] ? 0 : 4;
 }
 
-/* ── localStorage helpers ── */
-function lsKey(w, d, type) { return `carabanchel_${type}_w${w}_d${d}`; }
-function isChecked(w, d)    { return localStorage.getItem(lsKey(w,d,'check')) === '1'; }
-function getFeeling(w, d)   { return localStorage.getItem(lsKey(w,d,'feel')) || ''; }
-function getNote(w, d)      { return localStorage.getItem(lsKey(w,d,'note')) || ''; }
+/* ── API CONFIG ── */
+const API_URL   = 'https://violet-worm-870512.hostingersite.com/api.php';
+const API_TOKEN = 'chris2026carabanchel';
+
+// Cache local para no hacer fetch en cada render
+let DB = {};
+let dbLoaded = false;
+
+async function loadDB() {
+  try {
+    const res = await fetch(API_URL, {
+      headers: { 'X-Token': API_TOKEN }
+    });
+    const json = await res.json();
+    if (json.ok) {
+      DB = json.data;
+      // Sincronizar también a localStorage como caché offline
+      localStorage.setItem('carabanchel_db', JSON.stringify(DB));
+    }
+  } catch (e) {
+    // Sin conexión — usar caché localStorage
+    const cached = localStorage.getItem('carabanchel_db');
+    if (cached) DB = JSON.parse(cached);
+  }
+  dbLoaded = true;
+  const activeWeek = getActiveWeek();
+  showWeek(activeWeek);
+}
+
+async function saveToAPI(weekIdx, dayIdx, payload) {
+  const key = `w${weekIdx}_d${dayIdx}`;
+  // Actualizar caché local inmediatamente
+  DB[key] = { ...DB[key], ...payload };
+  localStorage.setItem('carabanchel_db', JSON.stringify(DB));
+
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Token': API_TOKEN
+      },
+      body: JSON.stringify({ week_idx: weekIdx, day_idx: dayIdx, ...payload })
+    });
+  } catch (e) {
+    // Sin conexión — queda guardado en localStorage hasta próxima carga
+    console.warn('API offline, guardado en caché local');
+  }
+}
+
+/* ── HELPERS DE DATOS ── */
+function getField(w, d, field) {
+  const key = `w${w}_d${d}`;
+  return DB[key]?.[field] ?? (field === 'checked' ? false : '');
+}
+function isChecked(w, d) { return !!getField(w, d, 'checked'); }
+function getFeeling(w, d) { return getField(w, d, 'feeling'); }
+function getNote(w, d)    { return getField(w, d, 'note'); }
 
 function toggleCheck(e, w, d) {
   e.stopPropagation();
-  const key = lsKey(w,d,'check');
-  localStorage.getItem(key)==='1' ? localStorage.removeItem(key) : localStorage.setItem(key,'1');
+  const current = isChecked(w, d);
+  saveToAPI(w, d, { checked: !current });
   showWeek(w);
   expandedDay = `${w}-${d}`;
 }
 function setFeeling(e, w, d, val) {
   e.stopPropagation();
-  const key = lsKey(w,d,'feel');
-  getFeeling(w,d)===val ? localStorage.removeItem(key) : localStorage.setItem(key,val);
+  const current = getFeeling(w, d);
+  saveToAPI(w, d, { feeling: current === val ? '' : val });
   showWeek(w);
   expandedDay = `${w}-${d}`;
 }
 function saveNote(w, d) {
-  const val = document.getElementById(`note-${w}-${d}`).value;
-  val ? localStorage.setItem(lsKey(w,d,'note'), val) : localStorage.removeItem(lsKey(w,d,'note'));
-}
-function toggleExpand(e, w, d) {
-  e.stopPropagation();
-  expandedDay = expandedDay === `${w}-${d}` ? null : `${w}-${d}`;
-  showWeek(w);
+  const val = document.getElementById(`note-${w}-${d}`)?.value ?? '';
+  saveToAPI(w, d, { note: val });
 }
 
 /* ── VÍDEOS POR TIPO DE SESIÓN ── */
@@ -940,9 +988,19 @@ function showWeek(i) {
   document.getElementById('week-content').innerHTML = html;
 }
 
-/* ── INIT ── */
+function toggleExpand(e, w, d) {
+  e.stopPropagation();
+  expandedDay = expandedDay === `${w}-${d}` ? null : `${w}-${d}`;
+  showWeek(w);
+}
+
+/* ── INIT — carga API primero, luego renderiza ── */
+// Mientras carga mostramos la semana con caché local si existe
+const _cached = localStorage.getItem('carabanchel_db');
+if (_cached) { DB = JSON.parse(_cached); }
 const activeWeek = getActiveWeek();
 showWeek(activeWeek);
+loadDB(); // carga real desde API y re-renderiza
 </script>
 </body>
 </html>
