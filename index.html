@@ -629,6 +629,129 @@ h1 { font-size: 19px; font-weight: 600; color: #f0ede6; margin-bottom: 3px; }
   </div>
 </div>
 
+<!-- ══ PÁGINA: CARRERA ═════════════════════════════ -->
+<div id="page-carrera" class="page">
+  <div style="padding-top:1rem">
+    <h1>Carrera — 24 mayo</h1>
+    <p class="subtitle">Media Maratón Carabanchel · Puente de Toledo · 20,96 km</p>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:1.25rem">
+      <div class="sc"><div class="sc-label">D+ acum.</div><div class="sc-val">159m</div></div>
+      <div class="sc"><div class="sc-label">Dif. max</div><div class="sc-val">108m</div></div>
+      <div class="sc"><div class="sc-label">Pico</div><div class="sc-val">684m</div></div>
+      <div class="sc"><div class="sc-label">Pendiente</div><div class="sc-val">~3%</div></div>
+    </div>
+
+    <div style="background:#141414;border-radius:14px;padding:14px 12px 10px;margin-bottom:8px;border:0.5px solid #2a2a2a">
+      <canvas id="raceCanvas" height="150" style="width:100%;display:block"></canvas>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:4px 4px 0;margin-bottom:1rem">
+      <span style="font-size:10px;color:#444">0</span><span style="font-size:10px;color:#444">3</span>
+      <span style="font-size:10px;color:#444">6</span><span style="font-size:10px;color:#444">9</span>
+      <span style="font-size:10px;color:#444">12</span><span style="font-size:10px;color:#444">15</span>
+      <span style="font-size:10px;color:#444">18</span><span style="font-size:10px;color:#444">21km</span>
+    </div>
+
+    <!-- Segmentos estrategia -->
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:1rem">
+
+      <div style="background:#1a1000;border-radius:12px;padding:12px 14px;border:0.5px solid #2a2a2a">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:12px;font-weight:600;color:#e8e6e0">Km 0–1</span>
+          <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#2e1f00;color:#EF9F27">Repecho salida</span>
+        </div>
+        <div style="font-size:13px;font-weight:500;color:#f0ede6;margin-bottom:4px">Trampa nada más salir — 576m→603m</div>
+        <div style="font-size:12px;color:#888;line-height:1.6">Adrenalina + subida + pelotón = trampa perfecta. Sal deliberadamente lento. Deja pasar gente si hace falta.</div>
+        <div style="font-size:11px;font-weight:600;color:#EF9F27;margin-top:6px">FC objetivo: no superar 143 bpm</div>
+      </div>
+
+      <div style="background:#081828;border-radius:12px;padding:12px 14px;border:0.5px solid #2a2a2a">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:12px;font-weight:600;color:#e8e6e0">Km 1–4</span>
+          <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#0a1e35;color:#85B7EB">Bajada y ondulado</span>
+        </div>
+        <div style="font-size:13px;font-weight:500;color:#f0ede6;margin-bottom:4px">Estabiliza la FC — el cuerpo aún tiene adrenalina</div>
+        <div style="font-size:12px;color:#888;line-height:1.6">Baja de 603m a 576m y tramo ondulado. Bloquea la FC en Z2 antes de la primera subida.</div>
+        <div style="font-size:11px;font-weight:600;color:#85B7EB;margin-top:6px">FC objetivo: 138–143 bpm</div>
+        <div style="margin-top:6px"><span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#1a2535;color:#85B7EB">💧 Avituallamiento km 4</span></div>
+      </div>
+
+      <div style="background:#1a1200;border-radius:12px;padding:12px 14px;border:0.5px solid #2a2a2a">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:12px;font-weight:600;color:#e8e6e0">Km 4–7</span>
+          <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#2e1f00;color:#EF9F27">Primera subida</span>
+        </div>
+        <div style="font-size:13px;font-weight:500;color:#f0ede6;margin-bottom:4px">Subida progresiva con diente en el km 5</div>
+        <div style="font-size:12px;color:#888;line-height:1.6">De ~585m a ~615m. La FC subirá sola — deja que llegue a 145–146 bpm pero no más.</div>
+        <div style="font-size:11px;font-weight:600;color:#EF9F27;margin-top:6px">FC objetivo: 143–146 bpm</div>
+        <div style="margin-top:6px"><span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#1a2535;color:#85B7EB">🍬 Gel km 7</span></div>
+      </div>
+
+      <div style="background:#0a1f14;border-radius:12px;padding:12px 14px;border:0.5px solid #2a2a2a">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:12px;font-weight:600;color:#e8e6e0">Km 7–8</span>
+          <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#0a2e20;color:#5DCAA5">Respiro</span>
+        </div>
+        <div style="font-size:13px;font-weight:500;color:#f0ede6;margin-bottom:4px">Bajada corta — recarga antes del Tourmalet</div>
+        <div style="font-size:12px;color:#888;line-height:1.6">Bajada breve hasta ~605m. Recupera la respiración. En 1 km empieza lo más duro.</div>
+        <div style="font-size:11px;font-weight:600;color:#5DCAA5;margin-top:6px">FC objetivo: dejar bajar a 140–143 bpm</div>
+        <div style="margin-top:6px"><span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#1a2535;color:#85B7EB">💧 Avituallamiento km 9</span></div>
+      </div>
+
+      <div style="background:#2a0800;border-radius:12px;padding:12px 14px;border:0.5px solid #3a1000">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:12px;font-weight:600;color:#e8e6e0">Km 8–13,9</span>
+          <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#3a1000;color:#F0997B">EL TOURMALET</span>
+        </div>
+        <div style="font-size:13px;font-weight:500;color:#f0ede6;margin-bottom:4px">~6 km de subida dura hasta 684m — el momento de la verdad</div>
+        <div style="font-size:12px;color:#888;line-height:1.6">Este tramo decide la carrera. Si superas 150 bpm → camina 30–60 seg y retoma. El ritmo puede caer a 8'00"/km — no importa. Quien gestiona aquí vuela en el km 15–21.</div>
+        <div style="font-size:11px;font-weight:600;color:#F0997B;margin-top:6px">FC objetivo: no superar 150 bpm · caminar si hace falta</div>
+      </div>
+
+      <div style="background:#2a1000;border-radius:12px;padding:12px 14px;border:0.5px solid #3a1800">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:12px;font-weight:600;color:#e8e6e0">Km 13,9–15,5</span>
+          <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#3a1800;color:#FAC775">Meseta alta</span>
+        </div>
+        <div style="font-size:13px;font-weight:500;color:#f0ede6;margin-bottom:4px">No baja todavía — 680–684m durante 1,5 km</div>
+        <div style="font-size:12px;color:#888;line-height:1.6">Error típico: al llegar al km 13,9 muchos aceleran creyendo que ya baja. Te mantienes arriba hasta el km 15,47. Sigue gestionando la FC igual que en la subida.</div>
+        <div style="font-size:11px;font-weight:600;color:#FAC775;margin-top:6px">FC objetivo: mantener 145–150 bpm · no acelerar todavía</div>
+        <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
+          <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#1a2535;color:#85B7EB">💧 Avituallamiento km 15</span>
+          <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#1a2535;color:#85B7EB">🍬 Gel km 14</span>
+        </div>
+      </div>
+
+      <div style="background:#041828;border-radius:12px;padding:12px 14px;border:0.5px solid #2a2a2a">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:12px;font-weight:600;color:#e8e6e0">Km 15,5–21</span>
+          <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#0a1e35;color:#85B7EB">Bajada continua</span>
+        </div>
+        <div style="font-size:13px;font-weight:500;color:#f0ede6;margin-bottom:4px">5,5 km bajando — aquí recuperas todo el tiempo</div>
+        <div style="font-size:12px;color:#888;line-height:1.6">
+          <strong style="color:#e8e6e0">Km 15,5–17:</strong> empieza a soltar, FC 148–152 bpm<br>
+          <strong style="color:#e8e6e0">Km 17–19:</strong> Z3 real, las piernas van solas<br>
+          <strong style="color:#e8e6e0">Km 19–21:</strong> General Ricardos abajo — suéltalo todo
+        </div>
+        <div style="font-size:11px;font-weight:600;color:#85B7EB;margin-top:6px">FC objetivo progresivo: 148 → 154 bpm · a tope últimos 2 km</div>
+      </div>
+
+    </div>
+
+    <!-- Resumen reglas -->
+    <div style="background:#1a1a1a;border-radius:12px;padding:12px 14px;border:0.5px solid #2a2a2a">
+      <div style="font-size:10px;color:#444;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Reglas del día</div>
+      <div style="font-size:12px;color:#777;padding:5px 0;border-bottom:0.5px solid #1e1e1e;display:flex;gap:6px"><span style="color:#F0997B;flex-shrink:0">✗</span>Salir rápido km 0–1 — repecho + adrenalina = trampa</div>
+      <div style="font-size:12px;color:#777;padding:5px 0;border-bottom:0.5px solid #1e1e1e;display:flex;gap:6px"><span style="color:#F0997B;flex-shrink:0">✗</span>Perseguir ritmo km 8–13,9 — la FC manda</div>
+      <div style="font-size:12px;color:#777;padding:5px 0;border-bottom:0.5px solid #1e1e1e;display:flex;gap:6px"><span style="color:#F0997B;flex-shrink:0">✗</span>Acelerar al km 13,9 — todavía hay 1,5 km de meseta</div>
+      <div style="font-size:12px;color:#777;padding:5px 0;border-bottom:0.5px solid #1e1e1e;display:flex;gap:6px"><span style="color:#5DCAA5;flex-shrink:0">✓</span>Gel km 7 y km 14 — practica en tiradas de 14 y 16 km</div>
+      <div style="font-size:12px;color:#777;padding:5px 0;border-bottom:0.5px solid #1e1e1e;display:flex;gap:6px"><span style="color:#5DCAA5;flex-shrink:0">✓</span>Beber en avituallamientos km 4, 9 y 15</div>
+      <div style="font-size:12px;color:#777;padding:5px 0;border-bottom:0.5px solid #1e1e1e;display:flex;gap:6px"><span style="color:#5DCAA5;flex-shrink:0">✓</span>FC >150 bpm en subida → caminar 30–60 seg</div>
+      <div style="font-size:12px;color:#777;padding:5px 0;display:flex;gap:6px"><span style="color:#5DCAA5;flex-shrink:0">✓</span>Del km 19 al 21 suéltalo todo — ya no queda nada</div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ NAV INFERIOR ════════════════════════════════ -->
 <nav class="bottom-nav">
   <button class="nav-btn active" onclick="navTo('plan',this)">
@@ -640,16 +763,19 @@ h1 { font-size: 19px; font-weight: 600; color: #f0ede6; margin-bottom: 3px; }
   <button class="nav-btn" onclick="navTo('zonas',this)">
     <span class="nav-icon">❤️</span>Zonas FC
   </button>
+  <button class="nav-btn" onclick="navTo('carrera',this)">
+    <span class="nav-icon">🏁</span>Carrera
+  </button>
 </nav>
 
 <script>
-/* ── NAVEGACIÓN PÁGINAS ── */
 function navTo(page, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   el.classList.add('active');
   window.scrollTo(0, 0);
+  if (page === 'carrera') setTimeout(drawRaceProfile, 50);
 }
 
 /* ── TABS EJERCICIOS ── */
@@ -671,37 +797,37 @@ const W = [
       {dow:"Mar",date:"21 abr",type:"Rodaje Z2 ✓",detail:"55 min · 7,84 km · 7'02\"/km · 142 bpm",dot:"#1D9E75",tags:[{c:"tdone",t:"✓"}],done:true},
       {dow:"Mié",date:"22 abr",type:"Fuerza — cuerpo inferior",detail:"Duración: 35 min · 3 series × 12 reps\nSentadilla búlgara — cuádriceps y glúteo\nPeso muerto rumano — isquios y cadena posterior\nElevación de talón excéntrica — tendón de Aquiles\nPlancha frontal — 30 seg aguante\nDead bug — core profundo\nDescanso 60 seg entre series",dot:"#7F77DD",tags:[{c:"tstr",t:"fuerza"}]},
       {dow:"Jue",date:"23 abr",type:"Descanso — vacuna alergia",detail:"Descanso completo. Última dosis de la vacuna.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
-      {dow:"Vie",date:"24 abr",type:"Series",detail:"~50 min · 2 km Z2 + 5×3 min Z4 (157–165 bpm) 90 seg rec + 2 km vuelta calma",dot:"#185FA5",tags:[{c:"tseries",t:"series"},{c:"tz4",t:"Z4"}]},
+      {dow:"Vie",date:"24 abr",type:"Series ✓",detail:"50 min · 6,82 km · FC avg 146 bpm · max 172 bpm\n5×3 min completadas · ritmo series: 4'38\"–5'03\"/km\nRecuperaciones: trote muy lento (a mejorar)\nNota: próximas series salir a 5'15\"–5'30\"/km y recuperar trotando Z1",dot:"#185FA5",tags:[{c:"tdone",t:"✓"},{c:"tseries",t:"series"}],done:true},
       {dow:"Sáb",date:"25 abr",type:"Descanso",detail:"Descanso completo. Come bien. Mañana 12 km.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
       {dow:"Dom",date:"26 abr",type:"Tirada larga — 12 km",detail:"12 km · 7'10\"–7'30\"/km · Z2 estricto · Run-walk 9/1 si FC >145 · Salida 6:00",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
     ]
   },
   {
     phase:"build", phaseText:"Construcción base",
-    meta:[{l:"Volumen",v:"~28 km"},{l:"Martes",v:"60 min Z2"},{l:"Calidad",v:"Cuestas vie"},{l:"Tirada",v:"14 km"}],
-    note:"Primera semana de cuestas. El martes sube a 60 min. El 1 de mayo es festivo — aprovéchalo para las cuestas.",
+    meta:[{l:"Volumen",v:"~29 km"},{l:"Martes",v:"60 min fartlek"},{l:"Calidad",v:"Cuestas vie"},{l:"Tirada",v:"14 km"}],
+    note:"Primera semana de cuestas. El martes incorpora fartlek suave — cambios de ritmo naturales dentro del Z2. El 1 de mayo es festivo para las cuestas.",
     days:[
       {dow:"Lun",date:"27 abr",type:"Descanso",detail:"Recuperación de los 12 km del domingo.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
-      {dow:"Mar",date:"28 abr",type:"Rodaje Z2",detail:"60 min · 7'00\"–7'15\"/km · FC 135–145 bpm",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+      {dow:"Mar",date:"28 abr",type:"Rodaje Z2 + fartlek",detail:"Duración: 60 min · FC base 135–145 bpm\nBase Z2 a 7'00\"–7'15\"/km durante todo el rodaje\n4–5 aceleraciones de 60 seg a Z3 (146–155 bpm) distribuidas de forma natural\nVuelve a Z2 antes de cada aceleración — no fuerces el ritmo\nCuándo acelerar: cuando veas una referencia visual (farola, esquina) o lo pida el cuerpo\nNo es un entrenamiento de series — es un rodaje Z2 con chispas de vida",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"},{c:"tz3",t:"fartlek"}]},
       {dow:"Mié",date:"29 abr",type:"Descanso",detail:"Recuperación activa.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
       {dow:"Jue",date:"30 abr",type:"Fuerza — carga progresiva",detail:"Duración: 35 min · 3 series × 10 reps\nSentadilla búlgara con carga (mochila o mancuerna)\nPeso muerto rumano — siente el estiramiento en isquios\nElevación de talón excéntrica en escalón\nPlancha con toque de hombro — añade inestabilidad\nSuperman — extensión lumbar en suelo\nDescanso 60 seg entre series",dot:"#7F77DD",tags:[{c:"tstr",t:"fuerza"}]},
       {dow:"Vie",date:"1 may",type:"Cuestas cortas 🎉 Festivo",detail:"Duración total: ~55 min\n2 km calentamiento Z2 (7'15\"/km)\n6 × 45 seg subida a Z3–Z4 (FC 146–160 bpm)\nBaja trotando entre cada repetición (recuperación activa)\n2 km vuelta a la calma Z2\nDónde: cuesta O'Donnell o rampa del Retiro",dot:"#BA7517",tags:[{c:"thills",t:"cuestas"},{c:"tz4",t:"Z4"}]},
       {dow:"Sáb",date:"2 may",type:"Movilidad con bandas",detail:"Duración: 25 min · ligero, pre-tirada larga\nMonster walk lateral — 15 pasos cada lado\nAlmeja lateral (clamshell) — 15 reps por pierna\nPuente de glúteos con banda — 15 reps\nDorsiflexión de tobillo con banda — 12 reps por pie\nMarcha de cadera con banda — 10 pasos por pierna",dot:"#5DCAA5",tags:[{c:"tstr",t:"bandas"}]},
-      {dow:"Dom",date:"3 may",type:"Tirada larga — 14 km",detail:"14 km · 7'10\"–7'30\"/km · Z2 estricto · Lleva agua o isotónico · Salida 6:00",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+      {dow:"Dom",date:"3 may",type:"Tirada larga — 14 km",detail:"14 km · 7'10\"–7'30\"/km · Z2 estricto\nLleva agua o isotónico · Salida 6:00\nRuta: planifica para que los últimos 2 km sean la subida Madrid Río → casa (574m→615m)\nFC en esa subida: no superar 148 bpm aunque el ritmo baje a 8'00\"/km\nGel o dátil en el km 9\nSimula la gestión del km 8–13 de Carabanchel",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
     ]
   },
   {
     phase:"peak", phaseText:"Semana pico",
-    meta:[{l:"Volumen",v:"~33 km"},{l:"Martes",v:"65 min Z2"},{l:"Calidad",v:"Cuestas vie"},{l:"Tirada",v:"16 km"}],
-    note:"La semana más importante del plan. Sábado descanso completo antes de los 16 km. Si terminas el domingo, la carrera está hecha.",
+    meta:[{l:"Volumen",v:"~34 km"},{l:"Martes",v:"65 min fartlek"},{l:"Calidad",v:"Cuestas vie"},{l:"Tirada",v:"16 km"}],
+    note:"La semana más importante del plan. Fartlek más estructurado en el martes. Sábado descanso completo antes de los 16 km.",
     days:[
       {dow:"Lun",date:"4 may",type:"Descanso",detail:"Recuperación de los 14 km.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
-      {dow:"Mar",date:"5 may",type:"Rodaje Z2",detail:"65 min · 7'00\"–7'15\"/km · FC 135–145 bpm",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+      {dow:"Mar",date:"5 may",type:"Rodaje Z2 + fartlek",detail:"Duración: 65 min · FC base 135–145 bpm\nBase Z2 a 7'00\"–7'15\"/km durante todo el rodaje\n5–6 aceleraciones de 90 seg a Z3 (146–155 bpm) cada ~8 min\nVuelve a Z2 entre cada aceleración — recuperación completa\nObjetivo: que la última aceleración tenga el mismo ritmo que la primera\nSi la FC no baja a Z2 antes de los 8 min, espera más",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"},{c:"tz3",t:"fartlek"}]},
       {dow:"Mié",date:"6 may",type:"Descanso",detail:"Foam roller si hay tensión en cuádriceps o isquios.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
       {dow:"Jue",date:"7 may",type:"Fuerza — calidad",detail:"Duración: 35 min · 3 series × 10 reps · sin llegar al fallo\nSentadilla búlgara con carga — máxima calidad técnica\nPeso muerto rumano — énfasis en la bajada excéntrica\nElevación de talón excéntrica — 3 seg bajando\nRotaciones de tronco con peso — oblicuos y core\nPlancha con extensión de brazo — estabilidad avanzada\nDescanso 75 seg entre series",dot:"#7F77DD",tags:[{c:"tstr",t:"fuerza"}]},
       {dow:"Vie",date:"8 may",type:"Cuestas largas",detail:"Duración total: ~60 min\n2 km calentamiento Z2 (7'15\"/km)\n5 × 90 seg subida a Z4 (FC 157–165 bpm)\nBaja trotando entre cada repetición\n2 km vuelta a la calma Z2\nObjetivo: simular el esfuerzo del km 9–12 de Carabanchel\nDónde: cuesta O'Donnell o rampa del Retiro",dot:"#BA7517",tags:[{c:"thills",t:"cuestas"},{c:"tz4",t:"Z4"}]},
       {dow:"Sáb",date:"9 may",type:"Descanso",detail:"Descanso completo. Come bien. Duerme 8h. Mañana 16 km.",dot:"#B4B2A9",tags:[{c:"trest",t:"descanso"}],rest:true},
-      {dow:"Dom",date:"10 may",type:"TIRADA LARGA — 16 km",detail:"16 km · 7'10\"–7'30\"/km · Z2 estricto · Gel km 10 · Run-walk si necesitas · Salida 6:00",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
+      {dow:"Dom",date:"10 may",type:"TIRADA LARGA — 16 km",detail:"16 km · 7'10\"–7'30\"/km · Z2 estricto · Salida 6:00\nRuta: planifica para que los últimos 2 km sean la subida Madrid Río → casa (574m→615m)\nFC en esa subida: no superar 148 bpm aunque el ritmo baje a 8'00\"/km\nGel o dátil en el km 10 y el km 14\nEste es el entreno más importante del plan — si terminas esto en Z2 la carrera está hecha\nRun-walk 9/1 si FC supera 145 bpm en los km centrales",dot:"#1D9E75",tags:[{c:"tz2",t:"Z2"}]},
     ]
   },
   {
@@ -994,7 +1120,101 @@ function toggleExpand(e, w, d) {
   showWeek(w);
 }
 
-/* ── INIT — carga API primero, luego renderiza ── */
+/* ── PERFIL CARRERA ── */
+function drawRaceProfile() {
+  const canvas = document.getElementById('raceCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth - 24;
+  const H = 150;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.scale(dpr, dpr);
+
+  const profile = [
+    [0,576],[0.25,582],[0.5,590],[0.75,598],[1,603],
+    [1.25,598],[1.5,591],[1.75,584],[2,579],
+    [2.3,580],[2.6,582],[3,580],[3.4,582],[3.8,585],
+    [4,586],[4.3,590],[4.6,596],[5,603],[5.2,598],[5.5,602],
+    [6,609],[6.4,612],[6.7,614],[7,616],
+    [7.3,611],[7.6,607],[8,605],
+    [8.4,611],[8.8,618],[9.2,626],[9.6,633],
+    [10,640],[10.4,647],[10.8,654],[11.2,661],[11.6,668],
+    [12,673],[12.4,678],[12.8,682],[13.0,684],[13.5,683],[13.91,682],
+    [14.2,681],[14.5,682],[14.8,681],[15.0,681],[15.2,680],[15.47,680],
+    [15.8,672],[16.0,666],[16.3,658],[16.5,652],[16.73,648],
+    [17.0,645],[17.3,646],[17.5,649],[17.63,653],
+    [17.9,650],[18.2,643],[18.5,635],[18.8,626],
+    [19.0,619],[19.3,610],[19.6,600],[20.0,591],[20.3,584],[20.6,579],[20.96,576]
+  ];
+
+  const minE=570, maxE=692, kmMax=20.96, padB=10, padT=14;
+  const xFor = km => (km/kmMax)*W;
+  const yFor = e => H-padB-((e-minE)/(maxE-minE))*(H-padT-padB);
+
+  const zones = [
+    {from:0,to:1,color:'rgba(239,159,39,0.15)'},
+    {from:1,to:4,color:'rgba(133,183,235,0.08)'},
+    {from:4,to:7,color:'rgba(239,159,39,0.13)'},
+    {from:7,to:8,color:'rgba(29,158,117,0.1)'},
+    {from:8,to:13.91,color:'rgba(240,100,80,0.18)'},
+    {from:13.91,to:15.47,color:'rgba(220,130,50,0.2)'},
+    {from:15.47,to:20.96,color:'rgba(133,183,235,0.12)'},
+  ];
+  zones.forEach(z => {
+    ctx.fillStyle = z.color;
+    ctx.fillRect(xFor(z.from), 0, xFor(z.to)-xFor(z.from), H);
+  });
+
+  [580,600,620,640,660,680].forEach(e => {
+    ctx.beginPath(); ctx.strokeStyle='#1e1e1e'; ctx.lineWidth=0.5;
+    ctx.moveTo(0,yFor(e)); ctx.lineTo(W,yFor(e)); ctx.stroke();
+    ctx.fillStyle='#2e2e2e'; ctx.font=`8px -apple-system`;
+    ctx.fillText(e+'m', 2, yFor(e)-2);
+  });
+
+  [1,4,7,8,13.91,15.47,19].forEach(km => {
+    ctx.beginPath(); ctx.setLineDash([2,3]); ctx.strokeStyle='#2a2a2a'; ctx.lineWidth=1;
+    ctx.moveTo(xFor(km),0); ctx.lineTo(xFor(km),H); ctx.stroke(); ctx.setLineDash([]);
+  });
+
+  ctx.beginPath();
+  ctx.moveTo(xFor(profile[0][0]), yFor(profile[0][1]));
+  profile.forEach(([km,e]) => ctx.lineTo(xFor(km),yFor(e)));
+  ctx.lineTo(xFor(20.96), H-padB); ctx.lineTo(0, H-padB); ctx.closePath();
+  const grad = ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,'rgba(239,159,39,0.6)'); grad.addColorStop(1,'rgba(239,159,39,0.04)');
+  ctx.fillStyle=grad; ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(xFor(profile[0][0]), yFor(profile[0][1]));
+  profile.forEach(([km,e]) => ctx.lineTo(xFor(km),yFor(e)));
+  ctx.strokeStyle='#EF9F27'; ctx.lineWidth=2; ctx.setLineDash([]); ctx.stroke();
+
+  ctx.beginPath(); ctx.arc(xFor(13),yFor(684),4,0,Math.PI*2);
+  ctx.fillStyle='#F0997B'; ctx.fill();
+  ctx.fillStyle='#F0997B'; ctx.font='bold 8px -apple-system';
+  ctx.fillText('684m', xFor(13)+5, yFor(684)+3);
+
+  ctx.beginPath(); ctx.arc(xFor(15.47),yFor(680),3,0,Math.PI*2);
+  ctx.fillStyle='#FAC775'; ctx.fill();
+  ctx.fillStyle='#FAC775'; ctx.font='8px -apple-system';
+  ctx.fillText('↓km15.5', xFor(15.47)+4, yFor(680)-3);
+
+  [[4,'💧'],[9,'💧'],[15,'💧']].forEach(([km]) => {
+    ctx.font='10px -apple-system'; ctx.fillText('💧', xFor(km)-5, H-1);
+  });
+  [[7,'🍬'],[14,'🍬']].forEach(([km]) => {
+    ctx.font='10px -apple-system'; ctx.fillText('🍬', xFor(km)-5, H-1);
+  });
+}
+
+// Dibuja el perfil cuando se navega a la pestaña carrera
+const _origNavTo = navTo;
+
 // Mientras carga mostramos la semana con caché local si existe
 const _cached = localStorage.getItem('carabanchel_db');
 if (_cached) { DB = JSON.parse(_cached); }
