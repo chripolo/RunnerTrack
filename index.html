@@ -10,32 +10,32 @@
 <style>
 /* ── DESIGN TOKENS ────────────────────────────── */
 :root {
-  --bg:           #09090F;
-  --surface-1:    #111118;
-  --surface-2:    #1A1A24;
-  --surface-3:    #22222F;
-  --border:       #22222F;
-  --border-faint: #16161F;
-  --text-1:       #F0EDE8;
-  --text-2:       #9494A8;
-  --text-3:       #4A4A5C;
-  --accent:       #22D4A0;
-  --accent-mid:   #10B981;
-  --accent-dim:   #0D2820;
-  --z3-text:      #F0A030;
-  --z3-bg:        #2A1C00;
-  --z4-text:      #F07060;
-  --z4-bg:        #2C0E0A;
+  --bg:           #000000;
+  --surface-1:    #0A0A0A;
+  --surface-2:    #111111;
+  --surface-3:    #181818;
+  --border:       #1E1E1E;
+  --border-faint: #111111;
+  --text-1:       #FFFFFF;
+  --text-2:       #888888;
+  --text-3:       #444444;
+  --accent:       #AAFF00;
+  --accent-mid:   #88CC00;
+  --accent-dim:   #0D1400;
+  --z3-text:      #FF8C00;
+  --z3-bg:        #1A1000;
+  --z4-text:      #FF4444;
+  --z4-bg:        #1A0808;
   --r-sm: 8px;
   --r-md: 12px;
-  --r-lg: 16px;
+  --r-lg: 14px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text-1); padding-bottom: 76px; font-size: 14px; -webkit-font-smoothing: antialiased; }
 
 /* ── NAV INFERIOR ─────────────────────────────── */
-.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 68px; background: rgba(17,17,24,0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 0.5px solid var(--border); display: flex; z-index: 100; }
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 68px; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border); display: flex; z-index: 100; }
 .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; cursor: pointer; color: var(--text-3); border: none; background: none; font-size: 11px; font-weight: 500; transition: color 0.15s; letter-spacing: 0.01em; }
 .nav-btn.active { color: var(--accent); }
 .nav-icon { font-size: 22px; line-height: 1; }
@@ -45,19 +45,19 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans
 .page.active { display: block; }
 
 /* ── TIPOGRAFÍA BASE ──────────────────────────── */
-h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px; letter-spacing: -0.02em; }
-.subtitle { font-size: 12px; color: var(--text-3); margin-bottom: 1.5rem; letter-spacing: 0.01em; }
+h1 { font-size: 28px; font-weight: 800; color: var(--text-1); margin-bottom: 4px; letter-spacing: -0.04em; }
+.subtitle { font-size: 12px; color: var(--text-3); margin-bottom: 1.5rem; letter-spacing: 0.03em; text-transform: uppercase; }
 
 /* ── PLAN — RESUMEN ───────────────────────────── */
 .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1.5rem; }
 .sc { background: var(--surface-1); border-radius: var(--r-md); padding: 10px 12px; border: 0.5px solid var(--border); }
-.sc-label { font-size: 10px; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
-.sc-val { font-size: 18px; font-weight: 700; color: var(--text-1); letter-spacing: -0.02em; }
+.sc-label { font-size: 9px; color: var(--text-3); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+.sc-val { font-size: 28px; font-weight: 800; color: var(--text-1); letter-spacing: -0.04em; line-height: 1; }
 
 /* ── PLAN — TABS SEMANAS ──────────────────────── */
 .week-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
 .wtab { padding: 6px 13px; border-radius: 99px; border: 0.5px solid var(--border); font-size: 12px; font-weight: 500; cursor: pointer; background: var(--surface-1); color: var(--text-2); white-space: nowrap; transition: all 0.15s; }
-.wtab.active { background: var(--accent); color: #041f16; font-weight: 600; border-color: var(--accent); }
+.wtab.active { background: var(--accent); color: #000000; font-weight: 700; border-color: var(--accent); }
 
 /* ── PLAN — SEMANA ────────────────────────────── */
 .week-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
@@ -73,18 +73,18 @@ h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px
 
 /* ── PLAN — DÍAS ──────────────────────────────── */
 .days { display: flex; flex-direction: column; gap: 6px; }
-.day { background: var(--surface-1); border: 0.5px solid var(--border); border-radius: var(--r-lg); overflow: hidden; transition: all 0.2s; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
-.day.rest { background: var(--bg); border-color: var(--border-faint); box-shadow: none; }
-.day.done-hard { opacity: 0.4; }
-.day.today { border-color: var(--accent); border-width: 1.5px; }
-.day.checked { background: var(--accent-dim); border-color: var(--accent-mid); }
+.day { background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; transition: border-color 0.15s; cursor: pointer; }
+.day.rest { background: var(--bg); border-color: var(--border-faint); }
+.day.done-hard { opacity: 0.35; }
+.day.today { border-color: var(--accent); border-width: 1px; }
+.day.checked { background: var(--accent-dim); border-color: var(--accent); }
 .day-summary { padding: 11px 13px; display: flex; gap: 10px; }
 .dleft { width: 62px; flex-shrink: 0; }
 .dow { font-size: 12px; font-weight: 600; color: var(--text-1); }
 .ddate { font-size: 10px; color: var(--text-3); }
 .dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; }
 .dright { flex: 1; min-width: 0; }
-.dtype { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 2px; }
+.dtype { font-size: 13px; font-weight: 700; color: var(--text-1); margin-bottom: 2px; letter-spacing: -0.01em; }
 .dtype.rest-t { color: var(--text-3); font-weight: 400; }
 .ddetail-short { font-size: 11px; color: var(--text-2); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dtags { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
@@ -122,15 +122,15 @@ h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px
 /* ── ACCIONES ── */
 .day-actions { display: flex; gap: 8px; margin-top: 10px; }
 .check-btn { flex: 1; padding: 10px; border-radius: var(--r-md); border: 1.5px solid var(--border); background: transparent; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text-2); transition: all 0.2s; }
-.check-btn.checked { background: var(--accent-mid); border-color: var(--accent-mid); color: #fff; font-weight: 600; }
+.check-btn.checked { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 700; }
 /* ── BADGES ── */
-.today-badge { font-size: 9px; background: var(--accent); color: #041f16; padding: 1px 6px; border-radius: 99px; font-weight: 600; }
+.today-badge { font-size: 9px; background: var(--accent); color: #000000; padding: 1px 6px; border-radius: 99px; font-weight: 700; letter-spacing: 0.04em; }
 .feeling-mini { font-size: 13px; margin-left: 4px; }
 /* ── PROGRESO ── */
 .week-progress { background: var(--surface-1); border-radius: var(--r-md); padding: 11px 13px; margin-bottom: 1rem; border: 0.5px solid var(--border); }
 .wp-label { font-size: 11px; color: var(--text-3); margin-bottom: 6px; display: flex; justify-content: space-between; font-weight: 500; }
 .wp-bar { background: var(--surface-3); border-radius: 99px; height: 5px; overflow: hidden; }
-.wp-fill { height: 5px; border-radius: 99px; background: linear-gradient(90deg, var(--accent-mid), var(--accent)); transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+.wp-fill { height: 4px; border-radius: 99px; background: var(--accent); transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
 .tz2    { background: var(--accent-dim); color: var(--accent); }
 .tz3    { background: var(--z3-bg); color: var(--z3-text); }
 .tz4    { background: var(--z4-bg); color: var(--z4-text); }
@@ -144,13 +144,13 @@ h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px
 /* ── EJERCICIOS — TABS ────────────────────────── */
 .ex-tabs { display: flex; gap: 6px; margin-bottom: 1.25rem; }
 .etab { padding: 7px 16px; border-radius: 99px; border: 0.5px solid var(--border); font-size: 13px; font-weight: 500; cursor: pointer; background: var(--surface-1); color: var(--text-2); transition: all 0.15s; }
-.etab.active { background: var(--accent); color: #041f16; font-weight: 600; border-color: var(--accent); }
+.etab.active { background: var(--accent); color: #000000; font-weight: 700; border-color: var(--accent); }
 
 /* ── EJERCICIOS — GRID ────────────────────────── */
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
-.card { background: var(--surface-1); border: 0.5px solid var(--border); border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.35); }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; }
 .card-header { padding: 14px 16px 10px; }
-.card-name { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 3px; letter-spacing: -0.01em; }
+.card-name { font-size: 16px; font-weight: 800; color: var(--text-1); margin-bottom: 3px; letter-spacing: -0.02em; }
 .card-muscle { font-size: 11px; color: var(--text-2); margin-bottom: 8px; }
 .card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
 .ctag { font-size: 10px; padding: 2px 7px; border-radius: 99px; font-weight: 500; }
@@ -161,7 +161,7 @@ h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px
 .etax  { background: #1a1a2e; color: #85B7EB; }
 .series-info { display: flex; gap: 6px; padding: 0 16px 12px; }
 .si { background: var(--surface-2); border-radius: var(--r-sm); padding: 6px 8px; font-size: 11px; color: var(--text-2); flex: 1; text-align: center; }
-.si strong { display: block; font-size: 14px; color: var(--text-1); font-weight: 700; letter-spacing: -0.01em; }
+.si strong { display: block; font-size: 16px; color: var(--text-1); font-weight: 800; letter-spacing: -0.02em; }
 .video-btn { display: block; position: relative; cursor: pointer; text-decoration: none; margin: 0 16px 14px; border-radius: var(--r-md); overflow: hidden; border: 0.5px solid var(--border); }
 .video-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--surface-2); }
 .video-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); }
@@ -183,10 +183,10 @@ h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px
 .no { color: var(--z4-text); margin-right: 4px; }
 
 /* ── ZONAS FC ─────────────────────────────────── */
-.zone-card { background: var(--surface-1); border: 0.5px solid var(--border); border-radius: var(--r-lg); padding: 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+.zone-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 16px; margin-bottom: 10px; }
 .zone-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
 .zone-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-.zone-name { font-size: 15px; font-weight: 600; color: var(--text-1); letter-spacing: -0.01em; }
+.zone-name { font-size: 15px; font-weight: 700; color: var(--text-1); letter-spacing: -0.02em; }
 .zone-range { font-size: 12px; color: var(--text-2); margin-left: auto; font-weight: 500; }
 .zone-desc { font-size: 12px; color: var(--text-2); line-height: 1.6; margin-bottom: 8px; }
 .zone-use { font-size: 11px; font-weight: 500; padding: 4px 11px; border-radius: 6px; display: inline-block; }
@@ -595,44 +595,44 @@ h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px
 
     <div class="zone-card">
       <div class="zone-header">
-        <div class="zone-dot" style="background:#22D4A0;opacity:0.5"></div>
+        <div class="zone-dot" style="background:#AAFF00;opacity:0.4"></div>
         <div class="zone-name">Zona 1 — Recuperación</div>
         <div class="zone-range">&lt;134 bpm</div>
       </div>
       <div class="zone-desc">Esfuerzo muy ligero. Caminar, calentamiento o vuelta a la calma. El cuerpo recupera sin estrés.</div>
-      <span class="zone-use" style="background:#0D2820;color:#22D4A0">Descanso activo · vuelta calma</span>
+      <span class="zone-use" style="background:#0D1400;color:#AAFF00">Descanso activo · vuelta calma</span>
     </div>
 
     <div class="zone-card">
       <div class="zone-header">
-        <div class="zone-dot" style="background:#22D4A0"></div>
+        <div class="zone-dot" style="background:#AAFF00"></div>
         <div class="zone-name">Zona 2 — Aeróbico base</div>
         <div class="zone-range">135–145 bpm</div>
       </div>
       <div class="zone-desc">El 80% del volumen del plan. Ritmo conversacional — debes poder hablar en frases completas. Es donde se construye la base aeróbica.</div>
-      <div style="font-size:11px;color:#9494A8;margin:6px 0">Tu ritmo actual en Z2: <strong style="color:#22D4A0">7'00"–7'30"/km</strong></div>
-      <span class="zone-use" style="background:#0D2820;color:#22D4A0">Rodajes suaves · tiradas largas</span>
+      <div style="font-size:11px;color:#888;margin:6px 0">Tu ritmo actual en Z2: <strong style="color:#AAFF00">7'00"–7'30"/km</strong></div>
+      <span class="zone-use" style="background:#0D1400;color:#AAFF00">Rodajes suaves · tiradas largas</span>
     </div>
 
     <div class="zone-card">
       <div class="zone-header">
-        <div class="zone-dot" style="background:#F0A030"></div>
+        <div class="zone-dot" style="background:#FF8C00"></div>
         <div class="zone-name">Zona 3 — Tempo</div>
         <div class="zone-range">146–156 bpm</div>
       </div>
       <div class="zone-desc">Esfuerzo moderado-alto. Puedes hablar pero en frases cortas. Es el ritmo objetivo de carrera el día de Carabanchel.</div>
-      <div style="font-size:11px;color:#9494A8;margin:6px 0">Ritmo objetivo carrera: <strong style="color:#F0A030">6'30"–6'45"/km</strong></div>
-      <span class="zone-use" style="background:#2A1C00;color:#F0A030">Tempo · ritmo carrera · cuestas</span>
+      <div style="font-size:11px;color:#888;margin:6px 0">Ritmo objetivo carrera: <strong style="color:#FF8C00">6'30"–6'45"/km</strong></div>
+      <span class="zone-use" style="background:#1A1000;color:#FF8C00">Tempo · ritmo carrera · cuestas</span>
     </div>
 
     <div class="zone-card">
       <div class="zone-header">
-        <div class="zone-dot" style="background:#F07060"></div>
+        <div class="zone-dot" style="background:#FF4444"></div>
         <div class="zone-name">Zona 4 — Umbral</div>
         <div class="zone-range">157–166 bpm</div>
       </div>
       <div class="zone-desc">Esfuerzo alto. Difícil hablar. Se usa en series e intervals — el 20% de calidad del plan.</div>
-      <span class="zone-use" style="background:#2C0E0A;color:#F07060">Series · cuestas cortas · intervals</span>
+      <span class="zone-use" style="background:#1A0808;color:#FF4444">Series · cuestas cortas · intervals</span>
     </div>
 
     <div class="zone-card">
@@ -642,15 +642,15 @@ h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px
         <div class="zone-range">167+ bpm</div>
       </div>
       <div class="zone-desc">Esfuerzo máximo. No sostenible más de segundos. No está en el plan salvo picos puntuales en series o cuestas.</div>
-      <span class="zone-use" style="background:#2C0808;color:#F07060">Picos puntuales en series</span>
+      <span class="zone-use" style="background:#1A0808;color:#FF4444">Picos puntuales en series</span>
     </div>
 
     <div class="hrv-box">
       <div class="hrv-title">Referencia de tus últimas sesiones</div>
-      <div class="hrv-row"><span class="hrv-label">Tirada larga 19 abr (10 km)</span><span class="hrv-val" style="color:#F07060">157 bpm · Z3/Z4</span></div>
-      <div class="hrv-row"><span class="hrv-label">Series cinta</span><span class="hrv-val" style="color:#F0A030">141 bpm · Z2/Z3</span></div>
-      <div class="hrv-row"><span class="hrv-label">Rodaje suave Retiro (7 km)</span><span class="hrv-val" style="color:#22D4A0">144 bpm · Z2 ✓</span></div>
-      <div class="hrv-row"><span class="hrv-label">Rodaje Z2 hoy (7,84 km)</span><span class="hrv-val" style="color:#22D4A0">142 bpm · Z2 ✓</span></div>
+      <div class="hrv-row"><span class="hrv-label">Tirada larga 19 abr (10 km)</span><span class="hrv-val" style="color:#FF4444">157 bpm · Z3/Z4</span></div>
+      <div class="hrv-row"><span class="hrv-label">Series cinta</span><span class="hrv-val" style="color:#FF8C00">141 bpm · Z2/Z3</span></div>
+      <div class="hrv-row"><span class="hrv-label">Rodaje suave Retiro (7 km)</span><span class="hrv-val" style="color:#AAFF00">144 bpm · Z2 ✓</span></div>
+      <div class="hrv-row"><span class="hrv-label">Rodaje Z2 hoy (7,84 km)</span><span class="hrv-val" style="color:#AAFF00">142 bpm · Z2 ✓</span></div>
     </div>
   </div>
 </div>
@@ -668,7 +668,7 @@ h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px
       <div class="sc"><div class="sc-label">Pendiente</div><div class="sc-val">~3%</div></div>
     </div>
 
-    <div style="background:#1A1A24;border-radius:16px;padding:14px 12px 10px;margin-bottom:8px;border:0.5px solid #22222F">
+    <div style="background:#1A1A24;border-radius:16px;padding:14px 12px 10px;margin-bottom:8px;border:1px solid #1E1E1E">
       <canvas id="raceCanvas" height="150" style="width:100%;display:block"></canvas>
     </div>
     <div style="display:flex;justify-content:space-between;padding:4px 4px 0;margin-bottom:1rem">
@@ -681,66 +681,66 @@ h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px
     <!-- Segmentos estrategia -->
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:1rem">
 
-      <div style="background:#140E06;border-radius:16px;padding:14px 16px;border:0.5px solid #22222F">
+      <div style="background:#140E06;border-radius:16px;padding:14px 16px;border:1px solid #1E1E1E">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-size:12px;font-weight:600;color:#F0EDE8">Km 0–1</span>
+          <span style="font-size:12px;font-weight:600;color:#FFFFFF">Km 0–1</span>
           <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#2A1C00;color:#F0A030;font-weight:500">Repecho salida</span>
         </div>
-        <div style="font-size:13px;font-weight:600;color:#F0EDE8;margin-bottom:4px;letter-spacing:-0.01em">Trampa nada más salir — 576m→603m</div>
-        <div style="font-size:12px;color:#9494A8;line-height:1.6">Adrenalina + subida + pelotón = trampa perfecta. Sal deliberadamente lento. Deja pasar gente si hace falta.</div>
+        <div style="font-size:13px;font-weight:600;color:#FFFFFF;margin-bottom:4px;letter-spacing:-0.01em">Trampa nada más salir — 576m→603m</div>
+        <div style="font-size:12px;color:#888888;line-height:1.6">Adrenalina + subida + pelotón = trampa perfecta. Sal deliberadamente lento. Deja pasar gente si hace falta.</div>
         <div style="font-size:11px;font-weight:600;color:#F0A030;margin-top:8px">FC objetivo: no superar 143 bpm</div>
       </div>
 
-      <div style="background:#080F1A;border-radius:16px;padding:14px 16px;border:0.5px solid #22222F">
+      <div style="background:#080F1A;border-radius:16px;padding:14px 16px;border:1px solid #1E1E1E">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-size:12px;font-weight:600;color:#F0EDE8">Km 1–4</span>
+          <span style="font-size:12px;font-weight:600;color:#FFFFFF">Km 1–4</span>
           <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#0A1E35;color:#85B7EB;font-weight:500">Bajada y ondulado</span>
         </div>
-        <div style="font-size:13px;font-weight:600;color:#F0EDE8;margin-bottom:4px;letter-spacing:-0.01em">Estabiliza la FC — el cuerpo aún tiene adrenalina</div>
-        <div style="font-size:12px;color:#9494A8;line-height:1.6">Baja de 603m a 576m y tramo ondulado. Bloquea la FC en Z2 antes de la primera subida.</div>
+        <div style="font-size:13px;font-weight:600;color:#FFFFFF;margin-bottom:4px;letter-spacing:-0.01em">Estabiliza la FC — el cuerpo aún tiene adrenalina</div>
+        <div style="font-size:12px;color:#888888;line-height:1.6">Baja de 603m a 576m y tramo ondulado. Bloquea la FC en Z2 antes de la primera subida.</div>
         <div style="font-size:11px;font-weight:600;color:#85B7EB;margin-top:8px">FC objetivo: 138–143 bpm</div>
         <div style="margin-top:8px"><span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#0E1825;color:#85B7EB;font-weight:500">💧 Avituallamiento km 4</span></div>
       </div>
 
-      <div style="background:#141000;border-radius:16px;padding:14px 16px;border:0.5px solid #22222F">
+      <div style="background:#141000;border-radius:16px;padding:14px 16px;border:1px solid #1E1E1E">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-size:12px;font-weight:600;color:#F0EDE8">Km 4–7</span>
+          <span style="font-size:12px;font-weight:600;color:#FFFFFF">Km 4–7</span>
           <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#2A1C00;color:#F0A030;font-weight:500">Primera subida</span>
         </div>
-        <div style="font-size:13px;font-weight:600;color:#F0EDE8;margin-bottom:4px;letter-spacing:-0.01em">Subida progresiva con diente en el km 5</div>
-        <div style="font-size:12px;color:#9494A8;line-height:1.6">De ~585m a ~615m. La FC subirá sola — deja que llegue a 145–146 bpm pero no más.</div>
+        <div style="font-size:13px;font-weight:600;color:#FFFFFF;margin-bottom:4px;letter-spacing:-0.01em">Subida progresiva con diente en el km 5</div>
+        <div style="font-size:12px;color:#888888;line-height:1.6">De ~585m a ~615m. La FC subirá sola — deja que llegue a 145–146 bpm pero no más.</div>
         <div style="font-size:11px;font-weight:600;color:#F0A030;margin-top:8px">FC objetivo: 143–146 bpm</div>
         <div style="margin-top:8px"><span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#0E1825;color:#85B7EB;font-weight:500">🍬 Gel km 7</span></div>
       </div>
 
-      <div style="background:#0A1812;border-radius:16px;padding:14px 16px;border:0.5px solid #22222F">
+      <div style="background:#0A1812;border-radius:16px;padding:14px 16px;border:1px solid #1E1E1E">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-size:12px;font-weight:600;color:#F0EDE8">Km 7–8</span>
+          <span style="font-size:12px;font-weight:600;color:#FFFFFF">Km 7–8</span>
           <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#0D2820;color:#22D4A0;font-weight:500">Respiro</span>
         </div>
-        <div style="font-size:13px;font-weight:600;color:#F0EDE8;margin-bottom:4px;letter-spacing:-0.01em">Bajada corta — recarga antes del Tourmalet</div>
-        <div style="font-size:12px;color:#9494A8;line-height:1.6">Bajada breve hasta ~605m. Recupera la respiración. En 1 km empieza lo más duro.</div>
+        <div style="font-size:13px;font-weight:600;color:#FFFFFF;margin-bottom:4px;letter-spacing:-0.01em">Bajada corta — recarga antes del Tourmalet</div>
+        <div style="font-size:12px;color:#888888;line-height:1.6">Bajada breve hasta ~605m. Recupera la respiración. En 1 km empieza lo más duro.</div>
         <div style="font-size:11px;font-weight:600;color:#22D4A0;margin-top:8px">FC objetivo: dejar bajar a 140–143 bpm</div>
         <div style="margin-top:8px"><span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#0E1825;color:#85B7EB;font-weight:500">💧 Avituallamiento km 9</span></div>
       </div>
 
       <div style="background:#1E0606;border-radius:16px;padding:14px 16px;border:0.5px solid #2E1010">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-size:12px;font-weight:600;color:#F0EDE8">Km 8–13,9</span>
+          <span style="font-size:12px;font-weight:600;color:#FFFFFF">Km 8–13,9</span>
           <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#2C0E0A;color:#F07060;font-weight:500">EL TOURMALET</span>
         </div>
-        <div style="font-size:13px;font-weight:600;color:#F0EDE8;margin-bottom:4px;letter-spacing:-0.01em">~6 km de subida dura hasta 684m — el momento de la verdad</div>
-        <div style="font-size:12px;color:#9494A8;line-height:1.6">Este tramo decide la carrera. Si superas 150 bpm → camina 30–60 seg y retoma. El ritmo puede caer a 8'00"/km — no importa. Quien gestiona aquí vuela en el km 15–21.</div>
+        <div style="font-size:13px;font-weight:600;color:#FFFFFF;margin-bottom:4px;letter-spacing:-0.01em">~6 km de subida dura hasta 684m — el momento de la verdad</div>
+        <div style="font-size:12px;color:#888888;line-height:1.6">Este tramo decide la carrera. Si superas 150 bpm → camina 30–60 seg y retoma. El ritmo puede caer a 8'00"/km — no importa. Quien gestiona aquí vuela en el km 15–21.</div>
         <div style="font-size:11px;font-weight:600;color:#F07060;margin-top:8px">FC objetivo: no superar 150 bpm · caminar si hace falta</div>
       </div>
 
       <div style="background:#1E1006;border-radius:16px;padding:14px 16px;border:0.5px solid #2E1A08">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-size:12px;font-weight:600;color:#F0EDE8">Km 13,9–15,5</span>
+          <span style="font-size:12px;font-weight:600;color:#FFFFFF">Km 13,9–15,5</span>
           <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#261800;color:#FAC775;font-weight:500">Meseta alta</span>
         </div>
-        <div style="font-size:13px;font-weight:600;color:#F0EDE8;margin-bottom:4px;letter-spacing:-0.01em">No baja todavía — 680–684m durante 1,5 km</div>
-        <div style="font-size:12px;color:#9494A8;line-height:1.6">Error típico: al llegar al km 13,9 muchos aceleran creyendo que ya baja. Te mantienes arriba hasta el km 15,47. Sigue gestionando la FC igual que en la subida.</div>
+        <div style="font-size:13px;font-weight:600;color:#FFFFFF;margin-bottom:4px;letter-spacing:-0.01em">No baja todavía — 680–684m durante 1,5 km</div>
+        <div style="font-size:12px;color:#888888;line-height:1.6">Error típico: al llegar al km 13,9 muchos aceleran creyendo que ya baja. Te mantienes arriba hasta el km 15,47. Sigue gestionando la FC igual que en la subida.</div>
         <div style="font-size:11px;font-weight:600;color:#FAC775;margin-top:8px">FC objetivo: mantener 145–150 bpm · no acelerar todavía</div>
         <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
           <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#0E1825;color:#85B7EB;font-weight:500">💧 Avituallamiento km 15</span>
@@ -748,16 +748,16 @@ h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px
         </div>
       </div>
 
-      <div style="background:#04101E;border-radius:16px;padding:14px 16px;border:0.5px solid #22222F">
+      <div style="background:#04101E;border-radius:16px;padding:14px 16px;border:1px solid #1E1E1E">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-size:12px;font-weight:600;color:#F0EDE8">Km 15,5–21</span>
+          <span style="font-size:12px;font-weight:600;color:#FFFFFF">Km 15,5–21</span>
           <span style="font-size:10px;padding:2px 7px;border-radius:99px;background:#0A1E35;color:#85B7EB;font-weight:500">Bajada continua</span>
         </div>
-        <div style="font-size:13px;font-weight:600;color:#F0EDE8;margin-bottom:4px;letter-spacing:-0.01em">5,5 km bajando — aquí recuperas todo el tiempo</div>
-        <div style="font-size:12px;color:#9494A8;line-height:1.6">
-          <strong style="color:#F0EDE8">Km 15,5–17:</strong> empieza a soltar, FC 148–152 bpm<br>
-          <strong style="color:#F0EDE8">Km 17–19:</strong> Z3 real, las piernas van solas<br>
-          <strong style="color:#F0EDE8">Km 19–21:</strong> General Ricardos abajo — suéltalo todo
+        <div style="font-size:13px;font-weight:600;color:#FFFFFF;margin-bottom:4px;letter-spacing:-0.01em">5,5 km bajando — aquí recuperas todo el tiempo</div>
+        <div style="font-size:12px;color:#888888;line-height:1.6">
+          <strong style="color:#FFFFFF">Km 15,5–17:</strong> empieza a soltar, FC 148–152 bpm<br>
+          <strong style="color:#FFFFFF">Km 17–19:</strong> Z3 real, las piernas van solas<br>
+          <strong style="color:#FFFFFF">Km 19–21:</strong> General Ricardos abajo — suéltalo todo
         </div>
         <div style="font-size:11px;font-weight:600;color:#85B7EB;margin-top:8px">FC objetivo progresivo: 148 → 154 bpm · a tope últimos 2 km</div>
       </div>
@@ -765,15 +765,15 @@ h1 { font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 4px
     </div>
 
     <!-- Resumen reglas -->
-    <div style="background:#111118;border-radius:16px;padding:14px 16px;border:0.5px solid #22222F">
+    <div style="background:#0A0A0A;border-radius:16px;padding:14px 16px;border:1px solid #1E1E1E">
       <div style="font-size:10px;color:#4A4A5C;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;font-weight:600">Reglas del día</div>
-      <div style="font-size:12px;color:#9494A8;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#F07060;flex-shrink:0">✗</span>Salir rápido km 0–1 — repecho + adrenalina = trampa</div>
-      <div style="font-size:12px;color:#9494A8;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#F07060;flex-shrink:0">✗</span>Perseguir ritmo km 8–13,9 — la FC manda</div>
-      <div style="font-size:12px;color:#9494A8;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#F07060;flex-shrink:0">✗</span>Acelerar al km 13,9 — todavía hay 1,5 km de meseta</div>
-      <div style="font-size:12px;color:#9494A8;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#22D4A0;flex-shrink:0">✓</span>Gel km 7 y km 14 — practica en tiradas de 14 y 16 km</div>
-      <div style="font-size:12px;color:#9494A8;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#22D4A0;flex-shrink:0">✓</span>Beber en avituallamientos km 4, 9 y 15</div>
-      <div style="font-size:12px;color:#9494A8;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#22D4A0;flex-shrink:0">✓</span>FC >150 bpm en subida → caminar 30–60 seg</div>
-      <div style="font-size:12px;color:#9494A8;padding:6px 0;display:flex;gap:6px"><span style="color:#22D4A0;flex-shrink:0">✓</span>Del km 19 al 21 suéltalo todo — ya no queda nada</div>
+      <div style="font-size:12px;color:#888888;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#F07060;flex-shrink:0">✗</span>Salir rápido km 0–1 — repecho + adrenalina = trampa</div>
+      <div style="font-size:12px;color:#888888;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#F07060;flex-shrink:0">✗</span>Perseguir ritmo km 8–13,9 — la FC manda</div>
+      <div style="font-size:12px;color:#888888;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#F07060;flex-shrink:0">✗</span>Acelerar al km 13,9 — todavía hay 1,5 km de meseta</div>
+      <div style="font-size:12px;color:#888888;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#22D4A0;flex-shrink:0">✓</span>Gel km 7 y km 14 — practica en tiradas de 14 y 16 km</div>
+      <div style="font-size:12px;color:#888888;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#22D4A0;flex-shrink:0">✓</span>Beber en avituallamientos km 4, 9 y 15</div>
+      <div style="font-size:12px;color:#888888;padding:6px 0;border-bottom:0.5px solid #16161F;display:flex;gap:6px"><span style="color:#22D4A0;flex-shrink:0">✓</span>FC >150 bpm en subida → caminar 30–60 seg</div>
+      <div style="font-size:12px;color:#888888;padding:6px 0;display:flex;gap:6px"><span style="color:#22D4A0;flex-shrink:0">✓</span>Del km 19 al 21 suéltalo todo — ya no queda nada</div>
     </div>
   </div>
 </div>
@@ -1182,13 +1182,13 @@ function drawRaceProfile() {
   const yFor = e => H-padB-((e-minE)/(maxE-minE))*(H-padT-padB);
 
   const zones = [
-    {from:0,to:1,color:'rgba(240,160,48,0.22)'},
-    {from:1,to:4,color:'rgba(133,183,235,0.12)'},
-    {from:4,to:7,color:'rgba(240,160,48,0.18)'},
-    {from:7,to:8,color:'rgba(34,212,160,0.14)'},
-    {from:8,to:13.91,color:'rgba(240,100,80,0.26)'},
-    {from:13.91,to:15.47,color:'rgba(240,160,48,0.22)'},
-    {from:15.47,to:20.96,color:'rgba(133,183,235,0.15)'},
+    {from:0,to:1,color:'rgba(255,140,0,0.18)'},
+    {from:1,to:4,color:'rgba(100,160,255,0.08)'},
+    {from:4,to:7,color:'rgba(255,140,0,0.15)'},
+    {from:7,to:8,color:'rgba(170,255,0,0.12)'},
+    {from:8,to:13.91,color:'rgba(255,68,68,0.22)'},
+    {from:13.91,to:15.47,color:'rgba(255,140,0,0.18)'},
+    {from:15.47,to:20.96,color:'rgba(100,160,255,0.1)'},
   ];
   zones.forEach(z => {
     ctx.fillStyle = z.color;
@@ -1212,22 +1212,22 @@ function drawRaceProfile() {
   profile.forEach(([km,e]) => ctx.lineTo(xFor(km),yFor(e)));
   ctx.lineTo(xFor(20.96), H-padB); ctx.lineTo(0, H-padB); ctx.closePath();
   const grad = ctx.createLinearGradient(0,0,0,H);
-  grad.addColorStop(0,'rgba(240,160,48,0.7)'); grad.addColorStop(1,'rgba(240,160,48,0.03)');
+  grad.addColorStop(0,'rgba(170,255,0,0.5)'); grad.addColorStop(1,'rgba(170,255,0,0.0)');
   ctx.fillStyle=grad; ctx.fill();
 
   ctx.beginPath();
   ctx.moveTo(xFor(profile[0][0]), yFor(profile[0][1]));
   profile.forEach(([km,e]) => ctx.lineTo(xFor(km),yFor(e)));
-  ctx.strokeStyle='#F0A030'; ctx.lineWidth=2.5; ctx.setLineDash([]); ctx.stroke();
+  ctx.strokeStyle='#AAFF00'; ctx.lineWidth=2.5; ctx.setLineDash([]); ctx.stroke();
 
   ctx.beginPath(); ctx.arc(xFor(13),yFor(684),4,0,Math.PI*2);
-  ctx.fillStyle='#F07060'; ctx.fill();
-  ctx.fillStyle='#F07060'; ctx.font='bold 8px Inter,-apple-system';
+  ctx.fillStyle='#FF4444'; ctx.fill();
+  ctx.fillStyle='#FF4444'; ctx.font='bold 8px Inter,-apple-system';
   ctx.fillText('684m', xFor(13)+5, yFor(684)+3);
 
   ctx.beginPath(); ctx.arc(xFor(15.47),yFor(680),3,0,Math.PI*2);
-  ctx.fillStyle='#FAC775'; ctx.fill();
-  ctx.fillStyle='#FAC775'; ctx.font='8px Inter,-apple-system';
+  ctx.fillStyle='#AAFF00'; ctx.fill();
+  ctx.fillStyle='#AAFF00'; ctx.font='8px Inter,-apple-system';
   ctx.fillText('↓km15.5', xFor(15.47)+4, yFor(680)-3);
 
   [[4,'💧'],[9,'💧'],[15,'💧']].forEach(([km]) => {
