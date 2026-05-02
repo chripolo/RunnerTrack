@@ -47,14 +47,20 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans
 
 /* ── TIPOGRAFÍA BASE ──────────────────────────── */
 h1 { font-size: 28px; font-weight: 800; color: var(--text-1); margin-bottom: 8px; letter-spacing: -0.03em; }
-.subtitle { font-size: 13px; color: var(--text-2); margin-bottom: 2.5rem; letter-spacing: 0.02em; font-weight: 400; }
+.subtitle { font-size: 13px; color: var(--text-2); margin-bottom: 2rem; letter-spacing: 0.02em; font-weight: 400; }
 
-/* ── PLAN — RESUMEN ───────────────────────────── */
-.summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 2rem; }
-.sc { background: transparent; border-radius: var(--r-md); padding: 18px 16px; border: 1px solid rgba(34, 212, 160, 0.15); transition: all 0.3s ease; }
-.sc:hover { border-color: rgba(34, 212, 160, 0.4); background: rgba(34, 212, 160, 0.03); }
-.sc-label { font-size: 11px; color: var(--text-3); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
-.sc-val { font-size: 32px; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; }
+/* ── PLAN — RESUMEN TIPO B ────────────────────── */
+.summary { margin-bottom: 2rem; }
+.sc-featured { text-align: center; padding: 24px 20px 20px; position: relative; }
+.sc-featured::after { content: ''; display: block; width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: 20px auto 0; }
+.sc-feat-label { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 10px; }
+.sc-feat-date { font-size: 52px; font-weight: 900; color: var(--text-1); letter-spacing: -0.04em; line-height: 1; }
+.sc-feat-sub { font-size: 13px; color: var(--accent); font-weight: 600; margin-top: 8px; letter-spacing: 0.02em; }
+.sc-mini-row { display: flex; justify-content: center; gap: 0; margin-top: 20px; }
+.sc-mini { flex: 1; text-align: center; padding: 12px 8px; border-top: 1px solid rgba(74, 74, 92, 0.35); }
+.sc-mini:not(:last-child) { border-right: 1px solid rgba(74, 74, 92, 0.25); }
+.sc-mini-val { font-size: 20px; font-weight: 800; color: var(--text-1); letter-spacing: -0.02em; line-height: 1.1; }
+.sc-mini-label { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; margin-top: 4px; }
 
 /* ── PLAN — TABS SEMANAS ──────────────────────── */
 .week-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem; }
@@ -75,35 +81,44 @@ h1 { font-size: 28px; font-weight: 800; color: var(--text-1); margin-bottom: 8px
 .taper { background: rgba(10, 30, 53, 0.5); color: #85B7EB; border: 1px solid #1a3a5c; }
 .race  { background: rgba(44, 14, 10, 0.5); color: var(--z4-text); border: 1px solid var(--z4-bg); }
 
-/* ── PLAN — DÍAS ──────────────────────────────── */
-.days { display: flex; flex-direction: column; gap: 12px; }
-.day { background: rgba(17, 17, 24, 0.5); border: 1px solid rgba(34, 34, 47, 0.8); border-radius: var(--r-lg); overflow: hidden; transition: all 0.3s ease; cursor: pointer; }
-.day:hover { background: rgba(17, 17, 24, 0.8); border-color: rgba(34, 212, 160, 0.2); }
-.day.rest { background: transparent; border-color: rgba(74, 74, 92, 0.3); }
-.day.done-hard { opacity: 0.5; }
-.day.today { border-color: var(--accent); border-width: 2px; background: rgba(34, 212, 160, 0.05); }
-.day.checked { background: rgba(13, 40, 32, 0.6); border-color: var(--accent-mid); }
-.day-summary { padding: 16px 18px; display: flex; gap: 12px; align-items: center; }
-.dleft { width: 70px; flex-shrink: 0; }
-.dow { font-size: 14px; font-weight: 700; color: var(--text-1); }
-.ddate { font-size: 12px; color: var(--text-2); margin-top: 4px; }
-.dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 0; }
-.dright { flex: 1; min-width: 0; }
-.dtype { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 3px; letter-spacing: -0.01em; }
+/* ── PLAN — DÍAS (timeline) ───────────────────── */
+.days { display: flex; flex-direction: column; gap: 0; position: relative; }
+.days::before { content: ''; position: absolute; left: 28px; top: 16px; bottom: 16px; width: 1px; background: linear-gradient(to bottom, transparent, rgba(74, 74, 92, 0.4) 10%, rgba(74, 74, 92, 0.4) 90%, transparent); }
+.day { background: transparent; border: none; border-radius: 0; overflow: visible; transition: all 0.25s ease; cursor: pointer; position: relative; padding: 6px 0; }
+.day.rest .day-summary { opacity: 0.4; }
+.day.done-hard { opacity: 0.4; }
+.day-summary { padding: 10px 0 10px 60px; display: flex; gap: 12px; align-items: flex-start; position: relative; }
+/* Punto del timeline */
+.dleft { position: absolute; left: 0; top: 10px; width: 56px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--bg); box-shadow: 0 0 0 1px rgba(74, 74, 92, 0.5); flex-shrink: 0; }
+.day.today .dot { box-shadow: 0 0 0 3px rgba(34, 212, 160, 0.3); }
+.day.checked .dot { box-shadow: 0 0 0 2px var(--accent-mid); }
+.dow { font-size: 10px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; line-height: 1; }
+.ddate { font-size: 10px; color: var(--text-3); line-height: 1; }
+/* Contenido derecho */
+.dright { flex: 1; min-width: 0; background: rgba(17, 17, 24, 0.5); border: 1px solid rgba(34, 34, 47, 0.6); border-radius: var(--r-md); padding: 12px 14px; transition: all 0.25s ease; }
+.day:hover .dright { background: rgba(17, 17, 24, 0.85); border-color: rgba(34, 212, 160, 0.2); }
+.day.today .dright { border-color: var(--accent); border-width: 1.5px; background: rgba(34, 212, 160, 0.05); }
+.day.checked .dright { border-color: var(--accent-mid); background: rgba(16, 185, 129, 0.07); }
+.day.rest .dright { background: transparent; border-color: rgba(34, 34, 47, 0.3); }
+.dtype { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 3px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 6px; }
 .dtype.rest-t { color: var(--text-3); font-weight: 500; }
 .ddetail-short { font-size: 12px; color: var(--text-2); line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dtags { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-.dtag { font-size: 10px; padding: 4px 8px; border-radius: 16px; font-weight: 500; }
+.dtag { font-size: 10px; padding: 3px 8px; border-radius: 99px; font-weight: 500; }
 .chevron { font-size: 12px; color: var(--text-3); margin-left: auto; flex-shrink: 0; transition: transform 0.3s ease; }
 .chevron.open { transform: rotate(180deg); }
-/* ── EXPAND ── */
-.day-expand { display: none; padding: 0 13px 13px; border-top: 0.5px solid var(--border-faint); }
+/* Expand en timeline */
+.day-expand { display: none; padding: 0 0 12px 60px; }
 .day-expand.open { display: block; }
-.expand-section { margin: 10px 0; }
-.expand-label { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; font-weight: 600; }
-.expand-row { display: flex; gap: 8px; padding: 5px 0; border-bottom: 0.5px solid var(--border-faint); align-items: flex-start; }
+.day-expand > * { background: rgba(17, 17, 24, 0.3); border-radius: 0 0 var(--r-md) var(--r-md); border: 1px solid rgba(34, 34, 47, 0.4); border-top: none; padding: 12px 14px; }
+/* ── EXPAND ── */
+.expand-section { margin: 0 0 12px; }
+.expand-section:last-child { margin-bottom: 0; }
+.expand-label { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; font-weight: 700; }
+.expand-row { display: flex; gap: 10px; padding: 6px 0; border-bottom: 1px solid rgba(74, 74, 92, 0.2); align-items: flex-start; }
 .expand-row:last-child { border-bottom: none; }
-.expand-bullet { color: var(--accent); font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+.expand-bullet { color: var(--accent); font-size: 14px; flex-shrink: 0; margin-top: 1px; line-height: 1.4; }
 .expand-text { font-size: 13px; color: var(--text-2); line-height: 1.65; }
 .expand-text strong { color: var(--text-1); font-weight: 600; }
 .video-link-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 10px 12px; background: var(--surface-2); border-radius: var(--r-md); border: 0.5px solid var(--border); text-decoration: none; cursor: pointer; transition: background 0.15s; }
@@ -216,10 +231,16 @@ h1 { font-size: 28px; font-weight: 800; color: var(--text-1); margin-bottom: 8px
     <h1>Media Maratón Carabanchel</h1>
     <p class="subtitle">Plan 5 semanas · 21 abr → 24 may 2026 · Salidas a las 6:00</p>
     <div class="summary">
-      <div class="sc"><div class="sc-label">Carrera</div><div class="sc-val">24 may</div></div>
-      <div class="sc"><div class="sc-label">Semanas</div><div class="sc-val">5</div></div>
-      <div class="sc"><div class="sc-label">Km totales</div><div class="sc-val">~96 km</div></div>
-      <div class="sc"><div class="sc-label">Z2 volumen</div><div class="sc-val">~80%</div></div>
+      <div class="sc-featured">
+        <div class="sc-feat-label">Próxima carrera</div>
+        <div class="sc-feat-date">24 may</div>
+        <div class="sc-feat-sub">Media Maratón Carabanchel</div>
+      </div>
+      <div class="sc-mini-row">
+        <div class="sc-mini"><div class="sc-mini-val">5</div><div class="sc-mini-label">Semanas</div></div>
+        <div class="sc-mini"><div class="sc-mini-val">~96km</div><div class="sc-mini-label">Km totales</div></div>
+        <div class="sc-mini"><div class="sc-mini-val">~80%</div><div class="sc-mini-label">Vol. Z2</div></div>
+      </div>
     </div>
     <div class="week-tabs">
       <button class="wtab active" onclick="showWeek(0)">S1 · 20–26 abr</button>
@@ -1084,64 +1105,66 @@ function showWeek(i) {
     if (checked && !hardDone) cls += ' checked';
     if (hardDone) cls += ' done-hard';
 
-    html += `<div class="${cls}" onclick="toggleExpand(event,${i},${di})">
-      <div class="day-summary">
+    html += `<div class="${cls}">
+      <div class="day-summary" onclick="toggleExpand(event,${i},${di})">
         <div class="dleft">
+          <div class="dot" style="background:${d.dot}"></div>
           <div class="dow">${d.dow}</div>
           <div class="ddate">${d.date}</div>
-          <div class="dot" style="background:${d.dot}"></div>
         </div>
         <div class="dright">
-          <div class="dtype ${d.rest&&!hardDone?'rest-t':''}">${d.type}${isToday?' <span class="today-badge">HOY</span>':''}${feelEmoji?' <span class="feeling-mini">'+feelEmoji+'</span>':''}</div>
+          <div class="dtype ${d.rest&&!hardDone?'rest-t':''}">
+            ${d.type}${isToday?' <span class="today-badge">HOY</span>':''}${feelEmoji?' <span class="feeling-mini">'+feelEmoji+'</span>':''}
+            <span class="chevron ${isOpen?'open':''}" style="margin-left:auto">▾</span>
+          </div>
           <div class="ddetail-short">${d.detail.split('\n')[0]}</div>
-          <div class="dtags">${d.tags.map(t=>`<span class="dtag ${t.c}">${t.t}</span>`).join('')}${note?'<span class="dtag" style="background:#1a1a35;color:#85B7EB">nota</span>':''}</div>
+          <div class="dtags">${d.tags.map(t=>`<span class="dtag ${t.c}">${t.t}</span>`).join('')}${note?'<span class="dtag" style="background:#1a1a35;color:#85B7EB">📝</span>':''}</div>
         </div>
-        <span class="chevron ${isOpen?'open':''}">▾</span>
       </div>
 
       <div class="day-expand ${isOpen?'open':''}">
+        <div>
+          <div class="expand-section">
+            <div class="expand-label">Detalle de la sesión</div>
+            ${formatDetail(d.detail)}
+          </div>
 
-        <div class="expand-section">
-          <div class="expand-label">Detalle de la sesión</div>
-          ${formatDetail(d.detail)}
-        </div>
+          ${dayVideos.length > 0 ? `
+          <div class="expand-section">
+            <div class="expand-label">Vídeos de referencia</div>
+            ${dayVideos.map(v => videoLinkHtml(v)).join('')}
+          </div>` : ''}
 
-        ${dayVideos.length > 0 ? `
-        <div class="expand-section">
-          <div class="expand-label">Vídeos de referencia</div>
-          ${dayVideos.map(v => videoLinkHtml(v)).join('')}
-        </div>` : ''}
-
-        ${showBtn ? `
-        <div class="expand-section">
-          <div class="expand-label">¿Cómo han ido las sensaciones?</div>
-          <div class="feelings" onclick="event.stopPropagation()">
-            <div>
-              <button class="feel-btn ${feeling==='good'?'selected-good':''}" onclick="setFeeling(event,${i},${di},'good')">😊</button>
-              <div class="feel-label">Bien</div>
-            </div>
-            <div>
-              <button class="feel-btn ${feeling==='ok'?'selected-ok':''}" onclick="setFeeling(event,${i},${di},'ok')">😐</button>
-              <div class="feel-label">Regular</div>
-            </div>
-            <div>
-              <button class="feel-btn ${feeling==='bad'?'selected-bad':''}" onclick="setFeeling(event,${i},${di},'bad')">😔</button>
-              <div class="feel-label">Mal</div>
+          ${showBtn ? `
+          <div class="expand-section">
+            <div class="expand-label">¿Cómo han ido las sensaciones?</div>
+            <div class="feelings" onclick="event.stopPropagation()">
+              <div>
+                <button class="feel-btn ${feeling==='good'?'selected-good':''}" onclick="setFeeling(event,${i},${di},'good')">😊</button>
+                <div class="feel-label">Bien</div>
+              </div>
+              <div>
+                <button class="feel-btn ${feeling==='ok'?'selected-ok':''}" onclick="setFeeling(event,${i},${di},'ok')">😐</button>
+                <div class="feel-label">Regular</div>
+              </div>
+              <div>
+                <button class="feel-btn ${feeling==='bad'?'selected-bad':''}" onclick="setFeeling(event,${i},${di},'bad')">😔</button>
+                <div class="feel-label">Mal</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="expand-section">
-          <div class="expand-label">Notas del entreno</div>
-          <div onclick="event.stopPropagation()">
-            <textarea class="notes-input" id="note-${i}-${di}" placeholder="Ej: salí cansado pero terminé bien los 12 km..." onblur="saveNote(${i},${di})">${note}</textarea>
+          <div class="expand-section">
+            <div class="expand-label">Notas del entreno</div>
+            <div onclick="event.stopPropagation()">
+              <textarea class="notes-input" id="note-${i}-${di}" placeholder="Ej: salí cansado pero terminé bien los 12 km..." onblur="saveNote(${i},${di})">${note}</textarea>
+            </div>
           </div>
+          <div class="day-actions" onclick="event.stopPropagation()">
+            <button class="check-btn ${checked?'checked':''}" onclick="toggleCheck(event,${i},${di})">
+              ${checked ? '✓ Sesión completada' : 'Marcar como completada'}
+            </button>
+          </div>` : ''}
         </div>
-        <div class="day-actions" onclick="event.stopPropagation()">
-          <button class="check-btn ${checked?'checked':''}" onclick="toggleCheck(event,${i},${di})">
-            ${checked ? '✓ Sesión completada' : 'Marcar como completada'}
-          </button>
-        </div>` : ''}
-
       </div>
     </div>`;
   });
